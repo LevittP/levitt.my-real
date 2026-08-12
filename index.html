@@ -40,7 +40,6 @@
       position: relative;
     }
 
-    /* Liquid waves */
     body::before,
     body::after {
       content: "";
@@ -99,7 +98,6 @@
       }
     }
 
-    /* Floating particles */
     .particles {
       position: fixed;
       inset: 0;
@@ -209,28 +207,22 @@
       padding: 27px;
       overflow: hidden;
       isolation: isolate;
-
       color: white;
       text-decoration: none;
-
       border: 1px solid var(--glass-border);
       border-radius: 27px;
-
       background:
         linear-gradient(
           135deg,
           rgba(255, 255, 255, 0.15),
           rgba(255, 255, 255, 0.045)
         );
-
       box-shadow:
         inset 0 1px 1px rgba(255, 255, 255, 0.22),
         inset 0 -1px rgba(0, 30, 100, 0.18),
         0 20px 70px rgba(0, 30, 100, 0.22);
-
       backdrop-filter: blur(25px) saturate(160%);
       -webkit-backdrop-filter: blur(25px) saturate(160%);
-
       transition:
         transform 0.3s ease,
         background 0.3s ease,
@@ -238,7 +230,6 @@
         box-shadow 0.3s ease;
     }
 
-    /* Glass shine */
     .card::before {
       content: "";
       position: absolute;
@@ -296,18 +287,14 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-
       border-radius: 15px;
       background: rgba(255, 255, 255, 0.11);
       border: 1px solid rgba(255, 255, 255, 0.15);
-
       box-shadow:
         inset 0 1px rgba(255, 255, 255, 0.2),
         0 8px 25px rgba(0, 40, 130, 0.18);
-
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-
       font-size: 22px;
     }
 
@@ -441,9 +428,10 @@
         <span class="arrow">↗</span>
       </a>
 
+      <!-- Discord button -->
       <a
         class="card"
-        href="https://discord.com/channels/1247613832818327624/1537177837327487049"
+        href="https://discord.com"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -453,6 +441,7 @@
         <span class="arrow">↗</span>
       </a>
 
+      <!-- Gorilla Tag Profile Picture -->
       <a
         class="card commission"
         href="https://discord.com/channels/1247613832818327624/1537177837327487049"
@@ -462,12 +451,13 @@
         <div class="icon">🦍</div>
         <h2>Get a Gorilla Tag Profile Picture</h2>
         <p>
-          Want a custom Gorilla Tag profile picture made in blender by a real person?
-          DM me on Discord or Click this Button.
+          Want a custom Gorilla Tag profile picture?
+          Hit me up through Discord and let's make something sick.
         </p>
         <span class="arrow">↗</span>
       </a>
 
+      <!-- Direct Discord DM -->
       <a
         class="card"
         href="https://discord.com/users/1375213224089223168"
