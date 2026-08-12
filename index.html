@@ -5,32 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Levitt</title>
-
-  <meta
-    name="description"
-    content="Levitt's website. YouTube, Discord, Gorilla Tag profile pictures, projects and more."
-  >
-
+  <meta name="description" content="Levitt's personal site.">
   <meta property="og:title" content="Levitt">
-  <meta
-    property="og:description"
-    content="Gorilla Tag, Blender, YouTube and other things by Levitt."
-  >
-  <meta property="og:type" content="website">
+  <meta property="og:description" content="Find Levitt's work, YouTube and Discord.">
 
   <style>
     :root {
       --accent: #55bfff;
       --accent-rgb: 85, 191, 255;
-      --bg: #03142f;
-      --bg2: #06285d;
-      --glass: rgba(255,255,255,.09);
-      --glass-strong: rgba(255,255,255,.14);
-      --border: rgba(255,255,255,.17);
-      --text: #ffffff;
-      --muted: rgba(225,242,255,.63);
+
+      --bg: #021027;
+      --bg2: #06336d;
+
+      --text: #fff;
+      --muted: rgba(225,242,255,.62);
+
+      --glass: rgba(255,255,255,.085);
+      --glass-hover: rgba(255,255,255,.13);
+      --border: rgba(255,255,255,.16);
+
       --blur: 24px;
-      --wave-speed: 14s;
     }
 
     * {
@@ -46,25 +40,56 @@
     body {
       min-height: 100vh;
       overflow-x: hidden;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
       color: var(--text);
       background:
-        radial-gradient(circle at 15% 10%, rgba(var(--accent-rgb), .30), transparent 28%),
-        radial-gradient(circle at 85% 25%, rgba(0,100,255,.30), transparent 32%),
-        radial-gradient(circle at 50% 100%, rgba(0,70,180,.45), transparent 45%),
-        linear-gradient(135deg, #020b1d, var(--bg), #031e4c);
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(var(--accent-rgb), .28),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 85% 25%,
+          rgba(0,100,255,.28),
+          transparent 30%
+        ),
+        linear-gradient(
+          145deg,
+          #01091b,
+          var(--bg),
+          #04265b
+        );
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
       transition: background .5s ease;
     }
 
     body.light {
       --text: #06162b;
       --muted: rgba(10,40,70,.62);
-      --glass: rgba(255,255,255,.35);
-      --glass-strong: rgba(255,255,255,.5);
-      --border: rgba(255,255,255,.65);
+      --glass: rgba(255,255,255,.34);
+      --glass-hover: rgba(255,255,255,.48);
+      --border: rgba(255,255,255,.7);
+
       background:
-        radial-gradient(circle at 15% 10%, rgba(var(--accent-rgb), .35), transparent 30%),
-        linear-gradient(135deg, #bceaff, #e9f8ff);
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(var(--accent-rgb), .35),
+          transparent 30%
+        ),
+        linear-gradient(
+          145deg,
+          #b9eaff,
+          #eefaff
+        );
     }
 
     body.no-motion *,
@@ -74,75 +99,69 @@
       transition-duration: .001ms !important;
     }
 
-    body.no-particles .particles {
+    body.no-particles #particles {
       display: none;
     }
 
-    /* Background waves */
+    /* =========================
+       BACKGROUND
+    ========================= */
 
     .wave {
       position: fixed;
-      width: 125vw;
+      width: 130vw;
       height: 52vh;
-      left: -12vw;
+      left: -15vw;
       z-index: -3;
       pointer-events: none;
-      border-radius: 48% 52% 45% 55%;
-      filter: blur(5px);
+
+      border-radius: 50%;
+      filter: blur(7px);
+
       background:
         linear-gradient(
           180deg,
-          rgba(90,200,255,.25),
-          rgba(0,80,220,.03)
+          rgba(90,200,255,.22),
+          transparent
         );
     }
 
     .wave.one {
-      top: -27vh;
+      top: -30vh;
       transform: rotate(-5deg);
-      animation: waveOne var(--wave-speed) ease-in-out infinite alternate;
+      animation: waveOne 14s ease-in-out infinite alternate;
     }
 
     .wave.two {
-      bottom: -29vh;
-      opacity: .7;
+      bottom: -30vh;
       transform: rotate(4deg);
+      opacity: .7;
       animation: waveTwo 18s ease-in-out infinite alternate;
-    }
-
-    .wave.three {
-      top: 35%;
-      left: -25vw;
-      opacity: .25;
-      transform: rotate(-7deg);
-      animation: waveThree 22s ease-in-out infinite alternate;
     }
 
     @keyframes waveOne {
       to {
-        transform: translateX(7%) rotate(-1deg) scale(1.1);
+        transform:
+          translateX(8%)
+          rotate(-1deg)
+          scale(1.1);
       }
     }
 
     @keyframes waveTwo {
       to {
-        transform: translateX(-7%) rotate(1deg) scale(1.12);
+        transform:
+          translateX(-8%)
+          rotate(1deg)
+          scale(1.1);
       }
     }
 
-    @keyframes waveThree {
-      to {
-        transform: translateX(12%) rotate(3deg) scale(1.08);
-      }
-    }
-
-    /* Particles */
-
-    .particles {
+    #particles {
       position: fixed;
       inset: 0;
-      z-index: -1;
       overflow: hidden;
+      z-index: -1;
       pointer-events: none;
     }
 
@@ -152,12 +171,17 @@
       height: var(--size);
       left: var(--x);
       top: var(--y);
+
       border-radius: 50%;
+
       background: white;
+
       opacity: var(--opacity);
+
       box-shadow:
         0 0 8px rgba(150,220,255,.8),
         0 0 20px rgba(50,150,255,.4);
+
       animation:
         float var(--duration) ease-in-out infinite alternate,
         drift var(--drift) ease-in-out infinite alternate;
@@ -165,7 +189,7 @@
 
     @keyframes float {
       to {
-        transform: translateY(-80px);
+        transform: translateY(-75px);
       }
     }
 
@@ -175,38 +199,47 @@
       }
     }
 
-    /* Cursor glow */
-
     #cursorGlow {
       position: fixed;
+
       width: 280px;
       height: 280px;
+
       border-radius: 50%;
+
       pointer-events: none;
+
       z-index: 0;
-      background: radial-gradient(
-        circle,
-        rgba(var(--accent-rgb), .12),
-        transparent 68%
-      );
+
       transform: translate(-50%, -50%);
-      mix-blend-mode: screen;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(var(--accent-rgb), .12),
+          transparent 68%
+        );
     }
 
-    /* Top navigation */
+    /* =========================
+       NAV
+    ========================= */
 
     nav {
       position: fixed;
+
       top: 18px;
       left: 50%;
+
       transform: translateX(-50%);
+
       width: min(900px, calc(100% - 30px));
-      z-index: 50;
+
+      z-index: 100;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
 
       padding: 10px 12px 10px 18px;
 
@@ -214,15 +247,21 @@
       border-radius: 20px;
 
       background: var(--glass);
-      backdrop-filter: blur(var(--blur)) saturate(160%);
-      -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+
+      backdrop-filter:
+        blur(var(--blur))
+        saturate(160%);
+
+      -webkit-backdrop-filter:
+        blur(var(--blur))
+        saturate(160%);
 
       box-shadow:
         inset 0 1px rgba(255,255,255,.18),
         0 15px 50px rgba(0,20,80,.2);
     }
 
-    .nav-logo {
+    .logo {
       font-weight: 800;
       letter-spacing: -.5px;
     }
@@ -234,14 +273,22 @@
 
     button,
     .nav-button {
-      border: 1px solid rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.13);
+
       color: inherit;
+
       background: rgba(255,255,255,.08);
+
       border-radius: 12px;
+
       padding: 9px 12px;
+
       cursor: pointer;
-      text-decoration: none;
+
       font: inherit;
+
+      text-decoration: none;
+
       transition: .2s ease;
     }
 
@@ -251,487 +298,856 @@
       transform: translateY(-2px);
     }
 
-    /* Main */
-
-    main {
-      position: relative;
-      z-index: 2;
-    }
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
       min-height: 100vh;
+
       width: min(1000px, 92%);
+
       margin: auto;
-      padding: 145px 20px 100px;
+
+      padding:
+        145px
+        20px
+        80px;
 
       display: flex;
       flex-direction: column;
       align-items: center;
+
       text-align: center;
     }
 
     .badge {
-      padding: 9px 16px;
       margin-bottom: 25px;
-      border: 1px solid var(--border);
+
+      padding: 9px 16px;
+
+      border:
+        1px solid var(--border);
+
       border-radius: 999px;
+
       background: var(--glass);
+
       backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
+
       color: var(--muted);
+
       font-size: 13px;
-      animation: fadeUp .7s ease both;
+
+      animation:
+        fadeUp .7s ease both;
     }
 
     h1 {
-      font-size: clamp(70px, 14vw, 145px);
+      margin-bottom: 28px;
+
+      font-size:
+        clamp(
+          70px,
+          14vw,
+          145px
+        );
+
       line-height: .82;
+
       letter-spacing: -10px;
+
       font-weight: 950;
-      margin-bottom: 30px;
 
       background:
         linear-gradient(
           120deg,
-          white 10%,
-          #8ddcff 45%,
-          #66a8ff 65%,
-          white 90%
+          white,
+          #8ddcff,
+          #639dff,
+          white
         );
+
       background-size: 250% auto;
+
       -webkit-background-clip: text;
       background-clip: text;
+
       color: transparent;
 
-      text-shadow: 0 20px 80px rgba(60,160,255,.2);
       animation:
-        titleGradient 7s linear infinite,
+        gradientMove 7s linear infinite,
         fadeUp .8s ease both;
     }
 
-    @keyframes titleGradient {
+    @keyframes gradientMove {
       to {
         background-position: 250% center;
       }
     }
 
     .subtitle {
-      max-width: 620px;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.7;
+      max-width: 610px;
+
       margin-bottom: 35px;
-      animation: fadeUp 1s ease both;
+
+      color: var(--muted);
+
+      font-size: 17px;
+
+      line-height: 1.7;
     }
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-buttons {
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+
       gap: 10px;
     }
 
-    .hero-button {
+    .hero-action {
       padding: 12px 17px;
+
+      border:
+        1px solid var(--border);
+
       border-radius: 15px;
-      background: rgba(255,255,255,.1);
-      border: 1px solid var(--border);
+
       color: inherit;
-      text-decoration: none;
+
+      background: var(--glass);
+
       backdrop-filter: blur(18px);
+
+      text-decoration: none;
+
       transition: .25s ease;
     }
 
-    .hero-button:hover {
+    .hero-action:hover {
       transform: translateY(-4px);
-      background: rgba(255,255,255,.17);
-      box-shadow: 0 12px 35px rgba(0,80,200,.22);
+
+      background:
+        var(--glass-hover);
+
+      box-shadow:
+        0 12px 35px
+        rgba(0,80,200,.22);
     }
 
-    /* Sections */
+    /* =========================
+       GENERAL SECTIONS
+    ========================= */
 
     section {
       width: min(1000px, 92%);
-      margin: 0 auto 100px;
+
+      margin:
+        0 auto
+        100px;
     }
 
-    .section-title {
-      margin-bottom: 20px;
-      font-size: 25px;
-      letter-spacing: -.5px;
-    }
-
-    .section-subtitle {
-      color: var(--muted);
+    .section-heading {
       margin-bottom: 25px;
     }
 
+    .section-heading h2 {
+      font-size: 28px;
+
+      letter-spacing: -.7px;
+
+      margin-bottom: 7px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+
+      font-size: 14px;
+    }
+
     .glass {
-      border: 1px solid var(--border);
-      background: var(--glass);
-      backdrop-filter: blur(var(--blur)) saturate(150%);
-      -webkit-backdrop-filter: blur(var(--blur)) saturate(150%);
+      border:
+        1px solid var(--border);
+
+      background:
+        var(--glass);
+
+      backdrop-filter:
+        blur(var(--blur))
+        saturate(150%);
+
+      -webkit-backdrop-filter:
+        blur(var(--blur))
+        saturate(150%);
+
       box-shadow:
-        inset 0 1px rgba(255,255,255,.16),
-        0 25px 80px rgba(0,20,80,.2);
+        inset 0 1px
+        rgba(255,255,255,.16),
+
+        0 25px 80px
+        rgba(0,20,80,.18);
     }
 
-    /* Cards */
+    /* =========================
+       LINK HUB
+    ========================= */
 
-    .grid {
+    .link-hub {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 16px;
     }
 
-    .card {
-      position: relative;
+    .link-card {
       min-height: 170px;
-      padding: 27px;
+
+      padding: 25px;
+
+      position: relative;
+
       overflow: hidden;
-      border-radius: 26px;
+
+      border-radius: 24px;
+
       color: inherit;
+
       text-decoration: none;
+
       transition: .3s ease;
+
       transform-style: preserve-3d;
     }
 
-    .card:hover {
-      transform: translateY(-8px);
-      background: var(--glass-strong);
-      border-color: rgba(190,235,255,.4);
-      box-shadow: 0 30px 90px rgba(0,70,190,.3);
+    .link-card:hover {
+      transform:
+        translateY(-8px)
+        scale(1.015);
+
+      background:
+        var(--glass-hover);
+
+      border-color:
+        rgba(190,235,255,.4);
+
+      box-shadow:
+        0 30px 80px
+        rgba(0,70,190,.27);
     }
 
-    .card-icon {
-      width: 48px;
-      height: 48px;
+    .link-icon {
+      width: 46px;
+      height: 46px;
+
       display: grid;
       place-items: center;
-      border-radius: 15px;
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.16);
-      margin-bottom: 20px;
-      font-size: 21px;
+
+      margin-bottom: 19px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(255,255,255,.09);
+
+      border:
+        1px solid
+        rgba(255,255,255,.15);
+
+      font-size: 20px;
     }
 
-    .card h3 {
-      margin-bottom: 8px;
-      font-size: 21px;
+    .link-card h3 {
+      margin-bottom: 7px;
+
+      font-size: 19px;
     }
 
-    .card p {
+    .link-card p {
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
 
-    .wide {
-      grid-column: span 2;
+      font-size: 13px;
+
+      line-height: 1.5;
     }
 
     .arrow {
       position: absolute;
-      right: 25px;
-      bottom: 23px;
-      font-size: 21px;
-      opacity: .55;
+
+      right: 22px;
+      bottom: 20px;
+
+      opacity: .5;
+
       transition: .2s;
     }
 
-    .card:hover .arrow {
+    .link-card:hover .arrow {
       opacity: 1;
-      transform: translate(5px,-5px);
+
+      transform:
+        translate(5px,-5px);
     }
 
-    /* YouTube */
+    /* =========================
+       FEATURED COMMISSION
+    ========================= */
 
-    .youtube-box {
-      padding: 25px;
-      border-radius: 25px;
+    .commission {
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 35px;
+
+      border-radius: 28px;
+
+      text-decoration: none;
+
+      color: inherit;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
-      gap: 20px;
+
+      gap: 30px;
+
+      transition: .3s ease;
     }
 
-    .youtube-box strong {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 5px;
+    .commission:hover {
+      transform: translateY(-7px);
+
+      background:
+        var(--glass-hover);
+
+      box-shadow:
+        0 35px 90px
+        rgba(0,80,220,.3);
     }
 
-    .youtube-box span {
+    .commission::after {
+      content: "";
+
+      position: absolute;
+
+      width: 280px;
+      height: 280px;
+
+      right: -100px;
+      top: -130px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(var(--accent-rgb), .13);
+
+      filter: blur(30px);
+
+      pointer-events: none;
+    }
+
+    .commission-icon {
+      width: 62px;
+      height: 62px;
+
+      display: grid;
+      place-items: center;
+
+      flex-shrink: 0;
+
+      border-radius: 19px;
+
+      background:
+        rgba(255,255,255,.1);
+
+      border:
+        1px solid
+        rgba(255,255,255,.15);
+
+      font-size: 28px;
+    }
+
+    .commission-copy {
+      flex: 1;
+    }
+
+    .commission h3 {
+      font-size: 25px;
+
+      margin-bottom: 8px;
+    }
+
+    .commission p {
       color: var(--muted);
+
+      line-height: 1.6;
+
+      font-size: 14px;
     }
-
-    .youtube-button {
-      white-space: nowrap;
-    }
-
-    /* Projects */
-
-    .project {
-      min-height: 140px;
-    }
-
-    /* Commission */
 
     .commission-status {
       display: inline-flex;
+
       align-items: center;
+
       gap: 7px;
+
       margin-top: 15px;
+
       padding: 7px 11px;
+
       border-radius: 999px;
-      background: rgba(70,255,160,.1);
-      border: 1px solid rgba(70,255,160,.2);
+
+      background:
+        rgba(70,255,160,.08);
+
+      border:
+        1px solid
+        rgba(70,255,160,.18);
+
       color: #aaffcf;
-      font-size: 12px;
+
+      font-size: 11px;
     }
 
     .status-dot {
       width: 7px;
       height: 7px;
+
       border-radius: 50%;
+
       background: #55ffa0;
-      box-shadow: 0 0 10px #55ffa0;
+
+      box-shadow:
+        0 0 10px #55ffa0;
     }
 
-    /* Copy box */
+    .commission-arrow {
+      font-size: 25px;
 
-    .copy-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 20px;
+      opacity: .6;
+    }
+
+    /* =========================
+       SHOWCASE
+    ========================= */
+
+    .showcase {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 16px;
+    }
+
+    .showcase-card {
+      min-height: 210px;
+
+      padding: 25px;
+
+      border-radius: 24px;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+    .showcase-card::before {
+      content: "";
+
+      position: absolute;
+
+      width: 220px;
+      height: 220px;
+
+      right: -90px;
+      bottom: -100px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(var(--accent-rgb), .1);
+
+      filter: blur(25px);
+    }
+
+    .showcase-number {
+      color: var(--accent);
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 18px;
+    }
+
+    .showcase-card h3 {
+      font-size: 21px;
+
+      margin-bottom: 8px;
+    }
+
+    .showcase-card p {
+      color: var(--muted);
+
+      font-size: 14px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       QUICK INFO
+    ========================= */
+
+    .info-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 16px;
+    }
+
+    .info-card {
+      padding: 22px;
+
       border-radius: 20px;
     }
 
-    .copy-value {
+    .info-label {
       color: var(--muted);
-      overflow: hidden;
-      text-overflow: ellipsis;
+
+      font-size: 12px;
+
+      margin-bottom: 7px;
     }
 
-    /* Settings */
+    .info-value {
+      font-size: 17px;
 
-    .settings {
+      font-weight: 700;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      width: min(1000px, 92%);
+
+      margin: auto;
+
+      padding:
+        20px
+        0
+        55px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    /* =========================
+       SETTINGS
+    ========================= */
+
+    #settings {
       position: fixed;
+
       top: 0;
       right: -380px;
-      width: min(360px, 90vw);
+
+      width:
+        min(360px, 90vw);
+
       height: 100vh;
-      z-index: 100;
 
-      padding: 90px 25px 30px;
+      z-index: 300;
 
-      background: rgba(5,20,48,.78);
-      backdrop-filter: blur(35px) saturate(160%);
-      -webkit-backdrop-filter: blur(35px) saturate(160%);
+      padding:
+        90px
+        25px
+        30px;
 
-      border-left: 1px solid rgba(255,255,255,.15);
+      background:
+        rgba(4,18,45,.78);
 
-      transition: right .35s cubic-bezier(.2,.8,.2,1);
-      box-shadow: -20px 0 70px rgba(0,0,0,.25);
+      backdrop-filter:
+        blur(35px)
+        saturate(160%);
+
+      -webkit-backdrop-filter:
+        blur(35px)
+        saturate(160%);
+
+      border-left:
+        1px solid
+        rgba(255,255,255,.14);
+
+      transition:
+        right .35s
+        cubic-bezier(.2,.8,.2,1);
+
+      box-shadow:
+        -20px 0 70px
+        rgba(0,0,0,.25);
     }
 
-    .settings.open {
+    #settings.open {
       right: 0;
     }
 
-    .settings h2 {
+    .settings-close {
+      float: right;
+    }
+
+    #settings h2 {
       margin-bottom: 25px;
     }
 
     .setting {
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 17px 0;
+
+      border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
     }
 
     .setting label {
       display: flex;
+
+      align-items: center;
+
       justify-content: space-between;
+
       gap: 10px;
-      margin-bottom: 10px;
-      color: var(--muted);
+
+      color: rgba(225,242,255,.7);
+
       font-size: 14px;
+
+      margin-bottom: 10px;
     }
 
     input[type="range"] {
       width: 100%;
-      accent-color: var(--accent);
+
+      accent-color:
+        var(--accent);
     }
 
     input[type="color"] {
-      width: 50px;
-      height: 30px;
+      width: 48px;
+      height: 28px;
+
       border: 0;
-      background: transparent;
-      cursor: pointer;
+
+      background: none;
     }
 
-    /* Command palette */
+    /* =========================
+       COMMAND PALETTE
+    ========================= */
 
-    .command-overlay {
+    #commandOverlay {
       position: fixed;
+
       inset: 0;
-      z-index: 200;
+
+      z-index: 400;
+
       display: none;
-      align-items: flex-start;
+
       justify-content: center;
-      padding-top: 15vh;
-      background: rgba(0,10,30,.5);
-      backdrop-filter: blur(10px);
+
+      align-items: flex-start;
+
+      padding-top: 14vh;
+
+      background:
+        rgba(0,10,30,.5);
+
+      backdrop-filter:
+        blur(10px);
     }
 
-    .command-overlay.open {
+    #commandOverlay.open {
       display: flex;
     }
 
-    .command {
-      width: min(600px, 90vw);
-      border-radius: 22px;
+    .command-box {
+      width:
+        min(600px, 90vw);
+
       overflow: hidden;
+
+      border-radius: 22px;
     }
 
-    .command input {
+    #commandInput {
       width: 100%;
+
+      padding: 20px;
+
       border: 0;
       outline: 0;
-      padding: 20px;
-      font-size: 17px;
+
+      background:
+        rgba(5,20,50,.75);
+
       color: white;
-      background: rgba(10,30,65,.8);
+
+      font-size: 16px;
     }
 
-    .command-list {
+    #commandResults {
       max-height: 350px;
+
       overflow-y: auto;
     }
 
     .command-item {
-      display: block;
       width: 100%;
-      padding: 16px 20px;
-      color: white;
-      text-align: left;
-      background: rgba(255,255,255,.06);
+
+      padding: 15px 20px;
+
       border: 0;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      cursor: pointer;
+
+      border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+      border-radius: 0;
+
+      background:
+        rgba(255,255,255,.05);
+
+      color: white;
+
+      text-align: left;
     }
 
     .command-item:hover {
-      background: rgba(100,190,255,.16);
+      background:
+        rgba(var(--accent-rgb), .15);
     }
 
-    /* Toast */
+    /* =========================
+       TOAST
+    ========================= */
 
-    .toast {
+    #toast {
       position: fixed;
-      bottom: 25px;
+
       left: 50%;
-      z-index: 300;
-      transform: translate(-50%, 30px);
-      opacity: 0;
-      pointer-events: none;
+      bottom: 25px;
+
+      z-index: 500;
 
       padding: 12px 18px;
+
       border-radius: 15px;
 
-      background: rgba(15,35,70,.7);
-      border: 1px solid rgba(255,255,255,.17);
-      backdrop-filter: blur(20px);
+      background:
+        rgba(10,30,65,.75);
 
-      color: white;
-      font-size: 14px;
+      border:
+        1px solid
+        rgba(255,255,255,.15);
+
+      backdrop-filter:
+        blur(20px);
+
+      transform:
+        translate(-50%, 30px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
       transition: .3s ease;
-    }
 
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    /* Progress */
-
-    .progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 3px;
-      width: 0;
-      z-index: 500;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent);
-    }
-
-    /* Footer */
-
-    footer {
-      width: min(1000px, 92%);
-      margin: 0 auto;
-      padding: 30px 0 60px;
-      text-align: center;
-      color: var(--muted);
       font-size: 13px;
     }
 
-    /* Mobile */
+    #toast.show {
+      opacity: 1;
 
-    @media (max-width: 700px) {
+      transform:
+        translate(-50%, 0);
+    }
+
+    /* =========================
+       SCROLL PROGRESS
+    ========================= */
+
+    #progress {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 0;
+      height: 3px;
+
+      z-index: 1000;
+
+      background:
+        var(--accent);
+
+      box-shadow:
+        0 0 15px
+        var(--accent);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 760px) {
+
       nav {
         top: 10px;
       }
 
-      .nav-logo {
-        font-size: 14px;
-      }
-
-      .nav-button {
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
       .hero {
-        padding-top: 125px;
+        padding-top: 120px;
       }
 
       h1 {
-        font-size: 75px;
+        font-size: 76px;
         letter-spacing: -6px;
       }
 
-      .grid {
+      .link-hub,
+      .showcase,
+      .info-grid {
         grid-template-columns: 1fr;
       }
 
-      .wide {
-        grid-column: span 1;
-      }
-
-      .youtube-box {
+      .commission {
         flex-direction: column;
+
         align-items: flex-start;
       }
 
-      .youtube-button {
-        width: 100%;
-        text-align: center;
+      .commission-arrow {
+        display: none;
+      }
+
+      .nav-button {
+        font-size: 12px;
+        padding: 8px 10px;
       }
     }
   </style>
@@ -742,31 +1158,55 @@
   <!-- Background -->
   <div class="wave one"></div>
   <div class="wave two"></div>
-  <div class="wave three"></div>
 
-  <div class="particles" id="particles"></div>
+  <div id="particles"></div>
 
   <div id="cursorGlow"></div>
 
-  <div class="progress" id="progress"></div>
+  <div id="progress"></div>
+
 
   <!-- Navigation -->
   <nav>
-    <div class="nav-logo">levitt.my</div>
+
+    <div class="logo">
+      levitt.my
+    </div>
 
     <div class="nav-actions">
-      <button onclick="openCommand()">⌘ Search</button>
-      <button onclick="toggleSettings()">⚙</button>
-      <button onclick="toggleFullscreen()">⛶</button>
+
+      <button
+        class="nav-button"
+        onclick="openCommand()"
+      >
+        ⌘
+      </button>
+
+      <button
+        class="nav-button"
+        onclick="toggleSettings()"
+      >
+        ⚙
+      </button>
+
+      <button
+        class="nav-button"
+        onclick="toggleFullscreen()"
+      >
+        ⛶
+      </button>
+
     </div>
+
   </nav>
 
+
   <!-- Settings -->
-  <aside class="settings" id="settings">
+  <aside id="settings">
 
     <button
+      class="settings-close"
       onclick="toggleSettings()"
-      style="float:right"
     >
       ✕
     </button>
@@ -774,9 +1214,13 @@
     <h2>Settings</h2>
 
     <div class="setting">
+
       <label>
         Glass blur
-        <span id="blurValue">24px</span>
+
+        <span id="blurValue">
+          24px
+        </span>
       </label>
 
       <input
@@ -786,318 +1230,452 @@
         max="45"
         value="24"
       >
+
     </div>
 
+
     <div class="setting">
+
       <label>
-        Accent color
+        Accent
+
         <input
           id="colorPicker"
           type="color"
           value="#55bfff"
         >
       </label>
+
     </div>
 
+
     <div class="setting">
+
       <label>
         Dark mode
-        <input id="darkToggle" type="checkbox" checked>
+
+        <input
+          id="darkToggle"
+          type="checkbox"
+          checked
+        >
       </label>
+
     </div>
 
+
     <div class="setting">
+
       <label>
         Particles
-        <input id="particleToggle" type="checkbox" checked>
+
+        <input
+          id="particleToggle"
+          type="checkbox"
+          checked
+        >
       </label>
+
     </div>
 
+
     <div class="setting">
+
       <label>
         Animations
-        <input id="motionToggle" type="checkbox" checked>
+
+        <input
+          id="motionToggle"
+          type="checkbox"
+          checked
+        >
       </label>
+
     </div>
 
-    <div class="setting">
-      <label>
-        Wave animation
-        <input id="waveToggle" type="checkbox" checked>
-      </label>
-    </div>
 
     <div class="setting">
-      <button onclick="randomizeTheme()" style="width:100%">
-        ✨ Randomize theme
+
+      <button
+        onclick="randomizeTheme()"
+        style="width:100%"
+      >
+        Randomize accent
       </button>
+
     </div>
 
+
     <div class="setting">
-      <button onclick="resetSettings()" style="width:100%">
-        Reset settings
+
+      <button
+        onclick="resetSettings()"
+        style="width:100%"
+      >
+        Reset
       </button>
+
     </div>
 
   </aside>
 
+
   <!-- Command Palette -->
-  <div class="command-overlay" id="commandOverlay" onclick="closeCommand(event)">
-    <div class="command glass">
+  <div
+    id="commandOverlay"
+    onclick="closeCommand(event)"
+  >
+
+    <div class="command-box glass">
 
       <input
         id="commandInput"
-        placeholder="Search the site..."
+        placeholder="Search..."
         autocomplete="off"
       >
 
-      <div class="command-list" id="commandList"></div>
+      <div id="commandResults"></div>
 
     </div>
+
   </div>
+
 
   <!-- Main -->
   <main>
 
+    <!-- Hero -->
     <div class="hero">
 
       <div class="badge">
-        ● ONLINE · LEVITT.MY
+        ● LEVITT.MY
       </div>
 
       <h1>LEVITT</h1>
 
       <p class="subtitle">
-        Gorilla Tag stuff, Blender thumbnails, profile pictures,
-        videos and other things I somehow ended up making.
+        Gorilla Tag, Blender, videos and random things
+        I've built on the internet.
       </p>
 
-      <div class="hero-buttons">
+      <div class="hero-actions">
 
         <a
-          class="hero-button"
+          class="hero-action"
           href="https://www.youtube.com/@notlevitt"
           target="_blank"
         >
-          ▶ YouTube
+          YouTube ↗
         </a>
 
         <a
-          class="hero-button"
+          class="hero-action"
           href="https://discord.com"
           target="_blank"
         >
-          Discord
+          Discord ↗
         </a>
 
         <a
-          class="hero-button"
-          href="https://discord.com/users/1375213224089223168"
-          target="_blank"
+          class="hero-action"
+          href="#commission"
         >
-          DM me
-        </a>
-
-        <a
-          class="hero-button"
-          href="#commissions"
-        >
-          Gorilla Tag PFP
+          Gorilla Tag PFP ↓
         </a>
 
       </div>
 
     </div>
 
-    <!-- Links -->
 
+    <!-- Main links -->
     <section>
 
-      <h2 class="section-title">Find me</h2>
+      <div class="section-heading">
 
-      <p class="section-subtitle">
-        The important internet buttons, carefully arranged so nobody gets lost.
-      </p>
+        <h2>Links</h2>
 
-      <div class="grid">
+        <p>
+          The places where I'm actually reachable.
+        </p>
+
+      </div>
+
+
+      <div class="link-hub">
 
         <a
-          class="card glass tilt"
+          class="link-card glass tilt"
           href="https://www.youtube.com/@notlevitt"
           target="_blank"
         >
-          <div class="card-icon">▶</div>
+
+          <div class="link-icon">
+            ▶
+          </div>
+
           <h3>YouTube</h3>
-          <p>@notlevitt</p>
-          <span class="arrow">↗</span>
+
+          <p>
+            @notlevitt
+          </p>
+
+          <span class="arrow">
+            ↗
+          </span>
+
         </a>
 
+
         <a
-          class="card glass tilt"
+          class="link-card glass tilt"
           href="https://discord.com"
           target="_blank"
         >
-          <div class="card-icon">◉</div>
+
+          <div class="link-icon">
+            ◉
+          </div>
+
           <h3>Discord</h3>
-          <p>Join me on Discord</p>
-          <span class="arrow">↗</span>
+
+          <p>
+            Join me on Discord.
+          </p>
+
+          <span class="arrow">
+            ↗
+          </span>
+
         </a>
 
+
         <a
-          class="card glass tilt"
+          class="link-card glass tilt"
           href="https://discord.com/users/1375213224089223168"
           target="_blank"
         >
-          <div class="card-icon">✉</div>
-          <h3>DM Me</h3>
-          <p>levitt.mp4</p>
-          <span class="arrow">↗</span>
-        </a>
 
-        <a
-          class="card glass tilt"
-          href="#projects"
-        >
-          <div class="card-icon">◆</div>
-          <h3>Projects</h3>
-          <p>Stuff I'm working on</p>
-          <span class="arrow">↓</span>
-        </a>
+          <div class="link-icon">
+            ✉
+          </div>
 
-      </div>
+          <h3>Message me</h3>
 
-    </section>
+          <p>
+            Discord: levitt.mp4
+          </p>
 
-    <!-- YouTube -->
+          <span class="arrow">
+            ↗
+          </span>
 
-    <section>
-
-      <h2 class="section-title">YouTube</h2>
-
-      <div class="youtube-box glass">
-
-        <div>
-          <strong>@notlevitt</strong>
-          <span>Videos, Gorilla Tag and whatever else gets uploaded.</span>
-        </div>
-
-        <a
-          class="hero-button youtube-button"
-          href="https://www.youtube.com/@notlevitt"
-          target="_blank"
-        >
-          Open channel ↗
         </a>
 
       </div>
 
     </section>
 
-    <!-- Commissions -->
 
-    <section id="commissions">
+    <!-- Commission -->
+    <section id="commission">
 
-      <h2 class="section-title">Gorilla Tag Profile Pictures</h2>
+      <div class="section-heading">
 
-      <p class="section-subtitle">
-        Want something custom for your profile? Send me the details.
-      </p>
+        <h2>Profile Picture</h2>
+
+        <p>
+          Custom Gorilla Tag artwork.
+        </p>
+
+      </div>
+
 
       <a
-        class="card glass wide tilt"
+        class="commission glass"
         href="https://discord.com/channels/1247613832818327624/1537177837327487049"
         target="_blank"
       >
 
-        <div class="card-icon">🦍</div>
-
-        <h3>Let me make you a Gorilla Tag profile picture</h3>
-
-        <p>
-          Custom Gorilla Tag profile pictures made through Discord.
-          Open the commission channel to get started.
-        </p>
-
-        <div class="commission-status">
-          <span class="status-dot"></span>
-          COMMISSIONS OPEN
+        <div class="commission-icon">
+          🦍
         </div>
 
-        <span class="arrow">↗</span>
+        <div class="commission-copy">
+
+          <h3>
+            Let me make you a Gorilla Tag profile picture
+          </h3>
+
+          <p>
+            Send your idea through the Discord commission
+            channel and I'll make the artwork there.
+          </p>
+
+          <div class="commission-status">
+
+            <span class="status-dot"></span>
+
+            COMMISSIONS OPEN
+
+          </div>
+
+        </div>
+
+        <div class="commission-arrow">
+          ↗
+        </div>
 
       </a>
 
     </section>
 
-    <!-- Projects -->
 
-    <section id="projects">
+    <!-- Showcase -->
+    <section>
 
-      <h2 class="section-title">Projects</h2>
+      <div class="section-heading">
 
-      <p class="section-subtitle">
-        A little collection of things I've made.
-      </p>
+        <h2>What I make</h2>
 
-      <div class="grid">
+        <p>
+          A quick look at the kind of stuff you'll find here.
+        </p>
 
-        <div class="card glass project tilt">
-          <div class="card-icon">🧊</div>
-          <h3>Blender</h3>
+      </div>
+
+
+      <div class="showcase">
+
+        <article class="showcase-card glass">
+
+          <div class="showcase-number">
+            01
+          </div>
+
+          <h3>
+            Blender
+          </h3>
+
           <p>
-            3D models, Gorilla Tag assets, thumbnails and experiments.
+            3D scenes, Gorilla Tag assets,
+            thumbnails and experiments.
           </p>
-        </div>
 
-        <div class="card glass project tilt">
-          <div class="card-icon">🌐</div>
-          <h3>Web Projects</h3>
-          <p>
-            Websites, interfaces and questionable amounts of JavaScript.
-          </p>
-        </div>
+        </article>
 
-        <div class="card glass project tilt">
-          <div class="card-icon">🎮</div>
-          <h3>Game Stuff</h3>
-          <p>
-            Roblox, Gorilla Tag projects and other game development experiments.
-          </p>
-        </div>
 
-        <div class="card glass project tilt">
-          <div class="card-icon">🎨</div>
-          <h3>Graphics</h3>
+        <article class="showcase-card glass">
+
+          <div class="showcase-number">
+            02
+          </div>
+
+          <h3>
+            Graphics
+          </h3>
+
           <p>
-            Thumbnails, profile pictures and other visual projects.
+            Profile pictures, thumbnails
+            and other visual projects.
           </p>
-        </div>
+
+        </article>
+
+
+        <article class="showcase-card glass">
+
+          <div class="showcase-number">
+            03
+          </div>
+
+          <h3>
+            Web
+          </h3>
+
+          <p>
+            Websites, interfaces and
+            unnecessarily complicated JavaScript.
+          </p>
+
+        </article>
+
+
+        <article class="showcase-card glass">
+
+          <div class="showcase-number">
+            04
+          </div>
+
+          <h3>
+            Games
+          </h3>
+
+          <p>
+            Roblox, Gorilla Tag projects
+            and other game experiments.
+          </p>
+
+        </article>
 
       </div>
 
     </section>
 
-    <!-- Copy -->
 
+    <!-- Info -->
     <section>
 
-      <h2 class="section-title">Quick contact</h2>
+      <div class="section-heading">
 
-      <div class="copy-box glass">
+        <h2>Quick info</h2>
 
-        <div>
-          <div style="font-weight:700;margin-bottom:5px;">
+        <p>
+          The useful bits, without making you hunt for them.
+        </p>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-card glass">
+
+          <div class="info-label">
+            YouTube
+          </div>
+
+          <div class="info-value">
+            @notlevitt
+          </div>
+
+        </div>
+
+
+        <div class="info-card glass">
+
+          <div class="info-label">
             Discord
           </div>
 
-          <div class="copy-value">
+          <div class="info-value">
             levitt.mp4
           </div>
+
         </div>
 
-        <button onclick="copyDiscord()">
-          Copy
-        </button>
+
+        <div class="info-card glass">
+
+          <div class="info-label">
+            Site
+          </div>
+
+          <div class="info-value">
+            levitt.my
+          </div>
+
+        </div>
 
       </div>
 
@@ -1105,222 +1683,337 @@
 
   </main>
 
+
+  <!-- Footer -->
   <footer>
-    <div style="margin-bottom:10px;">
+
+    <div>
       levitt.my
     </div>
 
-    <div>
-      © 2026 Levitt · Built with HTML, CSS & JavaScript
+    <div style="margin-top:7px;">
+      © <span id="year"></span> Levitt
     </div>
+
   </footer>
 
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
+
+  <div id="toast"></div>
+
 
   <script>
-    /* =========================================
-       PARTICLES
-    ========================================= */
 
-    const particleContainer = document.getElementById("particles");
+    /* =========================
+       PARTICLES
+    ========================= */
+
+    const particleContainer =
+      document.getElementById("particles");
 
     for (let i = 0; i < 65; i++) {
-      const particle = document.createElement("span");
 
-      particle.className = "particle";
+      const p =
+        document.createElement("span");
 
-      particle.style.setProperty("--size", `${Math.random() * 3 + 1}px`);
-      particle.style.setProperty("--x", `${Math.random() * 100}%`);
-      particle.style.setProperty("--y", `${Math.random() * 100}%`);
-      particle.style.setProperty("--opacity", `${Math.random() * .6 + .2}`);
-      particle.style.setProperty("--duration", `${Math.random() * 8 + 4}s`);
-      particle.style.setProperty("--drift", `${Math.random() * 10 + 5}s`);
+      p.className = "particle";
 
-      particleContainer.appendChild(particle);
+      p.style.setProperty(
+        "--size",
+        `${Math.random() * 3 + 1}px`
+      );
+
+      p.style.setProperty(
+        "--x",
+        `${Math.random() * 100}%`
+      );
+
+      p.style.setProperty(
+        "--y",
+        `${Math.random() * 100}%`
+      );
+
+      p.style.setProperty(
+        "--opacity",
+        `${Math.random() * .6 + .2}`
+      );
+
+      p.style.setProperty(
+        "--duration",
+        `${Math.random() * 8 + 5}s`
+      );
+
+      p.style.setProperty(
+        "--drift",
+        `${Math.random() * 10 + 5}s`
+      );
+
+      particleContainer.appendChild(p);
     }
 
 
-    /* =========================================
-       CURSOR GLOW
-    ========================================= */
+    /* =========================
+       CURSOR
+    ========================= */
 
-    const cursorGlow = document.getElementById("cursorGlow");
+    const cursor =
+      document.getElementById("cursorGlow");
 
-    window.addEventListener("pointermove", e => {
-      cursorGlow.style.left = `${e.clientX}px`;
-      cursorGlow.style.top = `${e.clientY}px`;
+    window.addEventListener(
+      "pointermove",
+      e => {
 
-      document.querySelectorAll(".tilt").forEach(card => {
+        cursor.style.left =
+          `${e.clientX}px`;
 
-        const rect = card.getBoundingClientRect();
-
-        if (
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom
-        ) {
-
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          const rotateX = ((y / rect.height) - .5) * -7;
-          const rotateY = ((x / rect.width) - .5) * 7;
-
-          card.style.transform =
-            `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.015)`;
-
-        } else {
-          card.style.transform = "";
-        }
-
-      });
-    });
+        cursor.style.top =
+          `${e.clientY}px`;
 
 
-    /* =========================================
-       CLICK RIPPLE
-    ========================================= */
+        document
+          .querySelectorAll(".tilt")
+          .forEach(card => {
 
-    document.addEventListener("click", e => {
+            const r =
+              card.getBoundingClientRect();
 
-      const ripple = document.createElement("span");
+            if (
+              e.clientX >= r.left &&
+              e.clientX <= r.right &&
+              e.clientY >= r.top &&
+              e.clientY <= r.bottom
+            ) {
 
-      ripple.style.position = "fixed";
-      ripple.style.left = `${e.clientX}px`;
-      ripple.style.top = `${e.clientY}px`;
-      ripple.style.width = "10px";
-      ripple.style.height = "10px";
-      ripple.style.borderRadius = "50%";
-      ripple.style.border = "1px solid rgba(255,255,255,.5)";
-      ripple.style.pointerEvents = "none";
-      ripple.style.zIndex = "9999";
-      ripple.style.transform = "translate(-50%,-50%)";
-      ripple.style.transition = "all .6s ease";
+              const x =
+                (e.clientX - r.left)
+                / r.width - .5;
 
-      document.body.appendChild(ripple);
+              const y =
+                (e.clientY - r.top)
+                / r.height - .5;
 
-      requestAnimationFrame(() => {
-        ripple.style.width = "100px";
-        ripple.style.height = "100px";
-        ripple.style.opacity = "0";
-      });
+              card.style.transform =
+                `perspective(700px)
+                 rotateX(${y * -6}deg)
+                 rotateY(${x * 6}deg)
+                 translateY(-7px)
+                 scale(1.015)`;
 
-      setTimeout(() => ripple.remove(), 650);
-    });
+            } else {
+
+              card.style.transform = "";
+
+            }
+
+          });
+
+      }
+    );
 
 
-    /* =========================================
+    /* =========================
+       RIPPLE
+    ========================= */
+
+    document.addEventListener(
+      "click",
+      e => {
+
+        const ripple =
+          document.createElement("span");
+
+        Object.assign(
+          ripple.style,
+          {
+            position: "fixed",
+            left: `${e.clientX}px`,
+            top: `${e.clientY}px`,
+            width: "8px",
+            height: "8px",
+            borderRadius: "50%",
+            border: "1px solid rgba(255,255,255,.45)",
+            pointerEvents: "none",
+            zIndex: "9999",
+            transform: "translate(-50%,-50%)",
+            transition: "all .55s ease"
+          }
+        );
+
+        document.body.appendChild(ripple);
+
+        requestAnimationFrame(() => {
+
+          ripple.style.width =
+            "90px";
+
+          ripple.style.height =
+            "90px";
+
+          ripple.style.opacity =
+            "0";
+
+        });
+
+        setTimeout(
+          () => ripple.remove(),
+          600
+        );
+
+      }
+    );
+
+
+    /* =========================
        SETTINGS
-    ========================================= */
+    ========================= */
 
-    const settings = document.getElementById("settings");
-    const blurSlider = document.getElementById("blurSlider");
-    const blurValue = document.getElementById("blurValue");
-    const colorPicker = document.getElementById("colorPicker");
-    const darkToggle = document.getElementById("darkToggle");
-    const particleToggle = document.getElementById("particleToggle");
-    const motionToggle = document.getElementById("motionToggle");
-    const waveToggle = document.getElementById("waveToggle");
+    const settings =
+      document.getElementById("settings");
+
+    const blurSlider =
+      document.getElementById("blurSlider");
+
+    const blurValue =
+      document.getElementById("blurValue");
+
+    const colorPicker =
+      document.getElementById("colorPicker");
+
+    const darkToggle =
+      document.getElementById("darkToggle");
+
+    const particleToggle =
+      document.getElementById("particleToggle");
+
+    const motionToggle =
+      document.getElementById("motionToggle");
+
 
     function toggleSettings() {
-      settings.classList.toggle("open");
+
+      settings.classList.toggle(
+        "open"
+      );
+
     }
 
-    blurSlider.addEventListener("input", () => {
-      const value = blurSlider.value;
 
-      document.documentElement.style.setProperty(
-        "--blur",
-        `${value}px`
-      );
+    blurSlider.addEventListener(
+      "input",
+      () => {
 
-      blurValue.textContent = `${value}px`;
+        const value =
+          blurSlider.value;
 
-      saveSettings();
-    });
+        document.documentElement
+          .style
+          .setProperty(
+            "--blur",
+            `${value}px`
+          );
 
-    colorPicker.addEventListener("input", () => {
-      setAccent(colorPicker.value);
-      saveSettings();
-    });
+        blurValue.textContent =
+          `${value}px`;
 
-    darkToggle.addEventListener("change", () => {
-      document.body.classList.toggle(
-        "light",
-        !darkToggle.checked
-      );
+        saveSettings();
 
-      saveSettings();
-    });
-
-    particleToggle.addEventListener("change", () => {
-      document.body.classList.toggle(
-        "no-particles",
-        !particleToggle.checked
-      );
-
-      saveSettings();
-    });
-
-    motionToggle.addEventListener("change", () => {
-      document.body.classList.toggle(
-        "no-motion",
-        !motionToggle.checked
-      );
-
-      saveSettings();
-    });
-
-    waveToggle.addEventListener("change", () => {
-      document.querySelectorAll(".wave").forEach(wave => {
-        wave.style.animationPlayState =
-          waveToggle.checked ? "running" : "paused";
-      });
-
-      saveSettings();
-    });
+      }
+    );
 
 
-    /* =========================================
-       ACCENT COLOR
-    ========================================= */
+    colorPicker.addEventListener(
+      "input",
+      () => {
+
+        setAccent(
+          colorPicker.value
+        );
+
+        saveSettings();
+
+      }
+    );
+
+
+    darkToggle.addEventListener(
+      "change",
+      () => {
+
+        document.body.classList.toggle(
+          "light",
+          !darkToggle.checked
+        );
+
+        saveSettings();
+
+      }
+    );
+
+
+    particleToggle.addEventListener(
+      "change",
+      () => {
+
+        document.body.classList.toggle(
+          "no-particles",
+          !particleToggle.checked
+        );
+
+        saveSettings();
+
+      }
+    );
+
+
+    motionToggle.addEventListener(
+      "change",
+      () => {
+
+        document.body.classList.toggle(
+          "no-motion",
+          !motionToggle.checked
+        );
+
+        saveSettings();
+
+      }
+    );
+
+
+    /* =========================
+       COLOR
+    ========================= */
 
     function setAccent(hex) {
 
-      document.documentElement.style.setProperty(
-        "--accent",
-        hex
-      );
-
-      const rgb = hexToRgb(hex);
-
-      if (rgb) {
-        document.documentElement.style.setProperty(
-          "--accent-rgb",
-          `${rgb.r}, ${rgb.g}, ${rgb.b}`
+      document.documentElement
+        .style
+        .setProperty(
+          "--accent",
+          hex
         );
-      }
+
+      const match =
+        hex.match(
+          /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i
+        );
+
+      if (!match) return;
+
+      document.documentElement
+        .style
+        .setProperty(
+          "--accent-rgb",
+          `${parseInt(match[1],16)},
+           ${parseInt(match[2],16)},
+           ${parseInt(match[3],16)}`
+        );
+
     }
 
-    function hexToRgb(hex) {
 
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-
-      return result
-        ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-          }
-        : null;
-    }
-
-
-    /* =========================================
-       RANDOM THEME
-    ========================================= */
+    /* =========================
+       RANDOM ACCENT
+    ========================= */
 
     function randomizeTheme() {
 
@@ -1335,453 +2028,509 @@
       ];
 
       const color =
-        colors[Math.floor(Math.random() * colors.length)];
+        colors[
+          Math.floor(
+            Math.random() *
+            colors.length
+          )
+        ];
 
-      colorPicker.value = color;
+      colorPicker.value =
+        color;
 
       setAccent(color);
 
-      showToast("Theme randomized");
-
       saveSettings();
+
+      toast("Accent randomized");
+
     }
 
 
-    /* =========================================
-       LOCAL STORAGE
-    ========================================= */
+    /* =========================
+       SAVE / LOAD
+    ========================= */
 
     function saveSettings() {
 
       localStorage.setItem(
-        "levittSettings",
+        "levitt-settings",
         JSON.stringify({
           blur: blurSlider.value,
           color: colorPicker.value,
           dark: darkToggle.checked,
           particles: particleToggle.checked,
-          motion: motionToggle.checked,
-          waves: waveToggle.checked
+          motion: motionToggle.checked
         })
       );
+
     }
+
 
     function loadSettings() {
 
-      const saved = localStorage.getItem("levittSettings");
+      const saved =
+        localStorage.getItem(
+          "levitt-settings"
+        );
 
       if (!saved) return;
 
       try {
 
-        const data = JSON.parse(saved);
+        const data =
+          JSON.parse(saved);
 
         if (data.blur) {
-          blurSlider.value = data.blur;
-          blurSlider.dispatchEvent(new Event("input"));
+
+          blurSlider.value =
+            data.blur;
+
+          blurSlider.dispatchEvent(
+            new Event("input")
+          );
+
         }
 
         if (data.color) {
-          colorPicker.value = data.color;
-          setAccent(data.color);
+
+          colorPicker.value =
+            data.color;
+
+          setAccent(
+            data.color
+          );
+
         }
 
-        if (typeof data.dark === "boolean") {
-          darkToggle.checked = data.dark;
+        if (
+          typeof data.dark ===
+          "boolean"
+        ) {
+
+          darkToggle.checked =
+            data.dark;
+
           document.body.classList.toggle(
             "light",
             !data.dark
           );
+
         }
 
-        if (typeof data.particles === "boolean") {
-          particleToggle.checked = data.particles;
+        if (
+          typeof data.particles ===
+          "boolean"
+        ) {
+
+          particleToggle.checked =
+            data.particles;
+
           document.body.classList.toggle(
             "no-particles",
             !data.particles
           );
+
         }
 
-        if (typeof data.motion === "boolean") {
-          motionToggle.checked = data.motion;
+        if (
+          typeof data.motion ===
+          "boolean"
+        ) {
+
+          motionToggle.checked =
+            data.motion;
+
           document.body.classList.toggle(
             "no-motion",
             !data.motion
           );
+
         }
 
-        if (typeof data.waves === "boolean") {
-          waveToggle.checked = data.waves;
+      } catch {}
 
-          document.querySelectorAll(".wave").forEach(wave => {
-            wave.style.animationPlayState =
-              data.waves ? "running" : "paused";
-          });
-        }
-
-      } catch {
-        localStorage.removeItem("levittSettings");
-      }
     }
+
 
     function resetSettings() {
 
-      localStorage.removeItem("levittSettings");
-
-      blurSlider.value = 24;
-      blurSlider.dispatchEvent(new Event("input"));
-
-      colorPicker.value = "#55bfff";
-      setAccent("#55bfff");
-
-      darkToggle.checked = true;
-      particleToggle.checked = true;
-      motionToggle.checked = true;
-      waveToggle.checked = true;
-
-      document.body.classList.remove(
-        "light",
-        "no-particles",
-        "no-motion"
+      localStorage.removeItem(
+        "levitt-settings"
       );
 
-      document.querySelectorAll(".wave").forEach(wave => {
-        wave.style.animationPlayState = "running";
-      });
+      location.reload();
 
-      showToast("Settings reset");
     }
+
 
     loadSettings();
 
 
-    /* =========================================
-       COPY DISCORD
-    ========================================= */
-
-    async function copyDiscord() {
-
-      try {
-
-        await navigator.clipboard.writeText(
-          "levitt.mp4"
-        );
-
-        showToast("Discord username copied");
-
-      } catch {
-
-        showToast("Copy failed");
-      }
-    }
-
-
-    /* =========================================
-       TOAST
-    ========================================= */
-
-    let toastTimeout;
-
-    function showToast(message) {
-
-      const toast =
-        document.getElementById("toast");
-
-      toast.textContent = message;
-      toast.classList.add("show");
-
-      clearTimeout(toastTimeout);
-
-      toastTimeout = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2200);
-    }
-
-
-    /* =========================================
+    /* =========================
        FULLSCREEN
-    ========================================= */
+    ========================= */
 
     async function toggleFullscreen() {
 
       try {
 
         if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-          showToast("Fullscreen enabled");
+
+          await document
+            .documentElement
+            .requestFullscreen();
+
+          toast(
+            "Fullscreen enabled"
+          );
+
         } else {
-          await document.exitFullscreen();
-          showToast("Fullscreen disabled");
+
+          await document
+            .exitFullscreen();
+
+          toast(
+            "Fullscreen disabled"
+          );
+
         }
 
       } catch {
-        showToast("Fullscreen unavailable");
+
+        toast(
+          "Fullscreen unavailable"
+        );
+
       }
+
     }
 
 
-    /* =========================================
+    /* =========================
        COMMAND PALETTE
-    ========================================= */
+    ========================= */
 
-    const commandOverlay =
-      document.getElementById("commandOverlay");
+    const overlay =
+      document.getElementById(
+        "commandOverlay"
+      );
 
     const commandInput =
-      document.getElementById("commandInput");
+      document.getElementById(
+        "commandInput"
+      );
 
-    const commandList =
-      document.getElementById("commandList");
+    const commandResults =
+      document.getElementById(
+        "commandResults"
+      );
+
 
     const commands = [
 
-      {
-        name: "YouTube",
-        action: () =>
+      [
+        "Open YouTube",
+        () =>
           window.open(
             "https://www.youtube.com/@notlevitt",
             "_blank"
           )
-      },
+      ],
 
-      {
-        name: "Discord",
-        action: () =>
+      [
+        "Join Discord",
+        () =>
           window.open(
             "https://discord.com",
             "_blank"
           )
-      },
+      ],
 
-      {
-        name: "DM Levitt",
-        action: () =>
+      [
+        "DM Levitt",
+        () =>
           window.open(
             "https://discord.com/users/1375213224089223168",
             "_blank"
           )
-      },
+      ],
 
-      {
-        name: "Gorilla Tag Profile Picture",
-        action: () =>
+      [
+        "Gorilla Tag PFP",
+        () =>
           window.open(
             "https://discord.com/channels/1247613832818327624/1537177837327487049",
             "_blank"
           )
-      },
+      ],
 
-      {
-        name: "Open Settings",
-        action: () => {
+      [
+        "Open settings",
+        () => {
           closeCommand();
           toggleSettings();
         }
-      },
+      ],
 
-      {
-        name: "Fullscreen",
-        action: toggleFullscreen
-      },
+      [
+        "Fullscreen",
+        toggleFullscreen
+      ],
 
-      {
-        name: "Randomize Theme",
-        action: randomizeTheme
-      },
-
-      {
-        name: "Copy Discord Username",
-        action: copyDiscord
-      }
+      [
+        "Randomize accent",
+        randomizeTheme
+      ]
 
     ];
 
-    function renderCommands(filter = "") {
 
-      commandList.innerHTML = "";
+    function renderCommands(
+      filter = ""
+    ) {
 
-      const filtered = commands.filter(command =>
-        command.name
-          .toLowerCase()
-          .includes(filter.toLowerCase())
-      );
+      commandResults.innerHTML =
+        "";
 
-      filtered.forEach(command => {
+      commands
+        .filter(
+          command =>
+            command[0]
+              .toLowerCase()
+              .includes(
+                filter.toLowerCase()
+              )
+        )
+        .forEach(command => {
 
-        const button =
-          document.createElement("button");
+          const button =
+            document.createElement(
+              "button"
+            );
 
-        button.className = "command-item";
-        button.textContent = command.name;
+          button.className =
+            "command-item";
 
-        button.onclick = () => {
-          command.action();
-          closeCommand();
-        };
+          button.textContent =
+            command[0];
 
-        commandList.appendChild(button);
-      });
+          button.onclick = () => {
+
+            command[1]();
+
+            closeCommand();
+
+          };
+
+          commandResults.appendChild(
+            button
+          );
+
+        });
+
     }
+
 
     function openCommand() {
 
-      commandOverlay.classList.add("open");
+      overlay.classList.add(
+        "open"
+      );
 
-      commandInput.value = "";
+      commandInput.value =
+        "";
 
       renderCommands();
 
-      setTimeout(() => {
-        commandInput.focus();
-      }, 50);
+      setTimeout(
+        () =>
+          commandInput.focus(),
+        40
+      );
+
     }
 
-    function closeCommand(event) {
+
+    function closeCommand(e) {
 
       if (
-        !event ||
-        event.target === commandOverlay
+        !e ||
+        e.target === overlay
       ) {
-        commandOverlay.classList.remove("open");
+
+        overlay.classList.remove(
+          "open"
+        );
+
       }
+
     }
+
 
     commandInput.addEventListener(
       "input",
-      () => renderCommands(commandInput.value)
+      () =>
+        renderCommands(
+          commandInput.value
+        )
     );
 
 
-    /* =========================================
-       KEYBOARD SHORTCUTS
-    ========================================= */
+    /* =========================
+       KEYBOARD
+    ========================= */
 
-    document.addEventListener("keydown", e => {
+    document.addEventListener(
+      "keydown",
+      e => {
 
-      if (
-        (e.ctrlKey || e.metaKey) &&
-        e.key.toLowerCase() === "k"
-      ) {
-        e.preventDefault();
-        openCommand();
-      }
-
-      if (e.key === "/" && document.activeElement !== commandInput) {
-        e.preventDefault();
-        openCommand();
-      }
-
-      if (e.key === "Escape") {
-        commandOverlay.classList.remove("open");
-        settings.classList.remove("open");
-      }
-
-      if (e.key.toLowerCase() === "f") {
         if (
-          document.activeElement.tagName !== "INPUT" &&
-          document.activeElement.tagName !== "TEXTAREA"
+          (e.ctrlKey || e.metaKey) &&
+          e.key.toLowerCase() === "k"
         ) {
-          toggleFullscreen();
+
+          e.preventDefault();
+
+          openCommand();
+
         }
+
+
+        if (
+          e.key === "/" &&
+          document.activeElement !==
+          commandInput
+        ) {
+
+          e.preventDefault();
+
+          openCommand();
+
+        }
+
+
+        if (
+          e.key === "Escape"
+        ) {
+
+          overlay.classList.remove(
+            "open"
+          );
+
+          settings.classList.remove(
+            "open"
+          );
+
+        }
+
       }
+    );
 
-    });
 
-
-    /* =========================================
+    /* =========================
        SCROLL PROGRESS
-    ========================================= */
+    ========================= */
 
-    window.addEventListener("scroll", () => {
+    window.addEventListener(
+      "scroll",
+      () => {
 
-      const scrollTop =
-        window.scrollY;
+        const scroll =
+          window.scrollY;
 
-      const height =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+        const max =
+          document.documentElement
+            .scrollHeight -
+          window.innerHeight;
 
-      const percentage =
-        height > 0
-          ? (scrollTop / height) * 100
-          : 0;
+        const percent =
+          max > 0
+            ? scroll / max * 100
+            : 0;
 
-      document.getElementById(
-        "progress"
-      ).style.width = `${percentage}%`;
-    });
+        document.getElementById(
+          "progress"
+        ).style.width =
+          `${percent}%`;
 
-
-    /* =========================================
-       PARTICLES REACT TO MOUSE
-    ========================================= */
-
-    window.addEventListener("pointermove", e => {
-
-      const x =
-        (e.clientX / window.innerWidth - .5) * 2;
-
-      const y =
-        (e.clientY / window.innerHeight - .5) * 2;
-
-      particleContainer.style.transform =
-        `translate(${x * -8}px, ${y * -8}px)`;
-    });
+      }
+    );
 
 
-    /* =========================================
-       ONLINE STATUS
-    ========================================= */
+    /* =========================
+       PARTICLE PARALLAX
+    ========================= */
 
-    const badge =
-      document.querySelector(".badge");
+    window.addEventListener(
+      "pointermove",
+      e => {
 
-    badge.addEventListener("click", () => {
+        const x =
+          e.clientX /
+          window.innerWidth -
+          .5;
 
-      const now = new Date();
+        const y =
+          e.clientY /
+          window.innerHeight -
+          .5;
 
-      showToast(
-        `Local time: ${now.toLocaleTimeString([], {
-          hour: "numeric",
-          minute: "2-digit"
-        })}`
+        particleContainer.style.transform =
+          `translate(
+            ${x * -7}px,
+            ${y * -7}px
+          )`;
+
+      }
+    );
+
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    let toastTimer;
+
+    function toast(message) {
+
+      const element =
+        document.getElementById(
+          "toast"
+        );
+
+      element.textContent =
+        message;
+
+      element.classList.add(
+        "show"
       );
 
-    });
+      clearTimeout(
+        toastTimer
+      );
+
+      toastTimer =
+        setTimeout(
+          () =>
+            element.classList.remove(
+              "show"
+            ),
+          2200
+        );
+
+    }
 
 
-    /* =========================================
-       DYNAMIC YEAR
-    ========================================= */
+    /* =========================
+       YEAR
+    ========================= */
 
-    const footer =
-      document.querySelector("footer");
+    document.getElementById(
+      "year"
+    ).textContent =
+      new Date().getFullYear();
 
-    footer.innerHTML = `
-      <div style="margin-bottom:10px;">
-        levitt.my
-      </div>
-      <div>
-        © ${new Date().getFullYear()} Levitt · Built with HTML, CSS & JavaScript
-      </div>
-    `;
-
-
-    /* =========================================
-       MOBILE TOUCH FEEDBACK
-    ========================================= */
-
-    document.querySelectorAll(".card").forEach(card => {
-
-      card.addEventListener("touchstart", () => {
-        card.style.transform = "scale(.985)";
-      }, { passive: true });
-
-      card.addEventListener("touchend", () => {
-        card.style.transform = "";
-      }, { passive: true });
-
-    });
   </script>
 
 </body>
