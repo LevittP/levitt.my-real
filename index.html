@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Levitt</title>
+  <meta
+    name="description"
+    content="Levitt's corner of the internet. Gorilla Tag profile pictures, YouTube, and Discord."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --glass: rgba(255, 255, 255, 0.11);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-muted: rgba(220, 238, 255, 0.68);
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Inter, Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 15% 15%, #237cff 0%, transparent 28%),
+        radial-gradient(circle at 85% 20%, #0066ff 0%, transparent 30%),
+        radial-gradient(circle at 50% 100%, #003caa 0%, transparent 45%),
+        #001b4d;
+      position: relative;
+    }
+
+    /* Liquid waves */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      pointer-events: none;
+      width: 120vw;
+      height: 55vh;
+      left: -10vw;
+      border-radius: 45% 55% 50% 50%;
+      filter: blur(3px);
+      opacity: 0.55;
+    }
+
+    body::before {
+      top: -22vh;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(111, 190, 255, 0.32),
+          rgba(0, 74, 210, 0.08)
+        );
+      transform: rotate(-5deg);
+      animation: waveOne 13s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      bottom: -28vh;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0, 128, 255, 0.05),
+          rgba(80, 180, 255, 0.28)
+        );
+      transform: rotate(4deg);
+      animation: waveTwo 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes waveOne {
+      from {
+        transform: translateX(-5%) rotate(-5deg) scale(1);
+      }
+
+      to {
+        transform: translateX(5%) rotate(-2deg) scale(1.08);
+      }
+    }
+
+    @keyframes waveTwo {
+      from {
+        transform: translateX(4%) rotate(4deg) scale(1);
+      }
+
+      to {
+        transform: translateX(-5%) rotate(1deg) scale(1.1);
+      }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      left: var(--x);
+      top: var(--y);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow:
+        0 0 8px rgba(120, 210, 255, 0.8),
+        0 0 18px rgba(70, 160, 255, 0.45);
+      opacity: var(--opacity);
+      animation:
+        float var(--duration) ease-in-out infinite alternate,
+        drift var(--drift) ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(20px);
+      }
+
+      to {
+        transform: translateY(-70px);
+      }
+    }
+
+    @keyframes drift {
+      from {
+        margin-left: -20px;
+      }
+
+      to {
+        margin-left: 30px;
+      }
+    }
+
+    .container {
+      width: min(920px, 92%);
+      min-height: 100vh;
+      margin: auto;
+      padding: 70px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 16px;
+      margin-bottom: 24px;
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.18),
+        0 10px 40px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      color: rgba(235, 248, 255, 0.8);
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: clamp(65px, 13vw, 125px);
+      line-height: 0.9;
+      letter-spacing: -8px;
+      font-weight: 900;
+      margin-bottom: 24px;
+      color: white;
+      text-shadow:
+        0 3px 25px rgba(0, 100, 255, 0.35),
+        0 0 70px rgba(100, 190, 255, 0.18);
+    }
+
+    .subtitle {
+      max-width: 600px;
+      margin: 0 auto 44px;
+      color: var(--text-muted);
+      font-size: 17px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .buttons {
+      width: 100%;
+      max-width: 700px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 165px;
+      padding: 27px;
+      overflow: hidden;
+      isolation: isolate;
+
+      color: white;
+      text-decoration: none;
+
+      border: 1px solid var(--glass-border);
+      border-radius: 27px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.15),
+          rgba(255, 255, 255, 0.045)
+        );
+
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.22),
+        inset 0 -1px rgba(0, 30, 100, 0.18),
+        0 20px 70px rgba(0, 30, 100, 0.22);
+
+      backdrop-filter: blur(25px) saturate(160%);
+      -webkit-backdrop-filter: blur(25px) saturate(160%);
+
+      transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    /* Glass shine */
+    .card::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 250px;
+      height: 250px;
+      top: -150px;
+      right: -100px;
+      border-radius: 50%;
+      background: rgba(160, 225, 255, 0.2);
+      filter: blur(35px);
+      transition: 0.4s ease;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      border-radius: inherit;
+      background:
+        linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0.08),
+          transparent 35%,
+          transparent 70%,
+          rgba(90, 180, 255, 0.06)
+        );
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.015);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.2),
+          rgba(255, 255, 255, 0.07)
+        );
+      border-color: rgba(190, 235, 255, 0.4);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.3),
+        0 25px 80px rgba(0, 70, 190, 0.35);
+    }
+
+    .card:hover::before {
+      transform: scale(1.4);
+      background: rgba(120, 210, 255, 0.28);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.2),
+        0 8px 25px rgba(0, 40, 130, 0.18);
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      font-size: 22px;
+    }
+
+    .card h2 {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 8px;
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .card p {
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+      color: rgba(220, 240, 255, 0.65);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .commission {
+      grid-column: span 2;
+      min-height: 190px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(100, 190, 255, 0.18),
+          rgba(255, 255, 255, 0.06)
+        );
+    }
+
+    .commission h2 {
+      font-size: 25px;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 27px;
+      bottom: 25px;
+      color: rgba(220, 245, 255, 0.55);
+      font-size: 23px;
+      transition: 0.3s ease;
+    }
+
+    .card:hover .arrow {
+      transform: translate(6px, -6px);
+      color: white;
+    }
+
+    footer {
+      margin-top: 45px;
+      color: rgba(205, 230, 255, 0.4);
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        padding: 50px 15px;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .commission {
+        grid-column: span 1;
+      }
+
+      h1 {
+        letter-spacing: -5px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="particles">
+    <span class="particle" style="--size:3px;--x:8%;--y:20%;--opacity:.55;--duration:5s;--drift:7s;"></span>
+    <span class="particle" style="--size:2px;--x:17%;--y:72%;--opacity:.7;--duration:7s;--drift:9s;"></span>
+    <span class="particle" style="--size:4px;--x:26%;--y:34%;--opacity:.45;--duration:6s;--drift:8s;"></span>
+    <span class="particle" style="--size:2px;--x:35%;--y:84%;--opacity:.65;--duration:8s;--drift:6s;"></span>
+    <span class="particle" style="--size:3px;--x:44%;--y:18%;--opacity:.5;--duration:6s;--drift:10s;"></span>
+    <span class="particle" style="--size:2px;--x:53%;--y:63%;--opacity:.75;--duration:9s;--drift:7s;"></span>
+    <span class="particle" style="--size:4px;--x:62%;--y:29%;--opacity:.4;--duration:7s;--drift:11s;"></span>
+    <span class="particle" style="--size:2px;--x:70%;--y:78%;--opacity:.65;--duration:5s;--drift:8s;"></span>
+    <span class="particle" style="--size:3px;--x:79%;--y:43%;--opacity:.55;--duration:8s;--drift:9s;"></span>
+    <span class="particle" style="--size:2px;--x:88%;--y:15%;--opacity:.7;--duration:6s;--drift:7s;"></span>
+    <span class="particle" style="--size:3px;--x:94%;--y:67%;--opacity:.45;--duration:9s;--drift:10s;"></span>
+    <span class="particle" style="--size:2px;--x:12%;--y:48%;--opacity:.6;--duration:7s;--drift:12s;"></span>
+    <span class="particle" style="--size:4px;--x:48%;--y:92%;--opacity:.4;--duration:8s;--drift:9s;"></span>
+    <span class="particle" style="--size:2px;--x:84%;--y:88%;--opacity:.65;--duration:6s;--drift:8s;"></span>
+  </div>
+
+  <main class="container">
+
+    <div class="badge">levitt.my</div>
+
+    <h1>LEVITT</h1>
+
+    <p class="subtitle">
+      Gorilla Tag stuff, thumbnails, profile pictures, and whatever else
+      I decide to make on the internet.
+    </p>
+
+    <section class="buttons">
+
+      <a
+        class="card youtube"
+        href="https://www.youtube.com/@notlevitt"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="icon">▶</div>
+        <h2>YouTube</h2>
+        <p>@notlevitt</p>
+        <span class="arrow">↗</span>
+      </a>
+
+      <a
+        class="card"
+        href="https://discord.com/channels/1247613832818327624/1537177837327487049"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="icon">💬</div>
+        <h2>Discord</h2>
+        <p>Join me on Discord</p>
+        <span class="arrow">↗</span>
+      </a>
+
+      <a
+        class="card commission"
+        href="https://discord.com/channels/1247613832818327624/1537177837327487049"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="icon">🦍</div>
+        <h2>Get a Gorilla Tag Profile Picture</h2>
+        <p>
+          Want a custom Gorilla Tag profile picture made in blender by a real person?
+          DM me on Discord or Click this Button.
+        </p>
+        <span class="arrow">↗</span>
+      </a>
+
+      <a
+        class="card"
+        href="https://discord.com/users/1375213224089223168"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="icon">✉</div>
+        <h2>DM Me</h2>
+        <p>Find me on Discord as levitt.mp4</p>
+        <span class="arrow">↗</span>
+      </a>
+
+    </section>
+
+    <footer>
+      © 2026 Levitt
+    </footer>
+
+  </main>
+
+</body>
+</html>
