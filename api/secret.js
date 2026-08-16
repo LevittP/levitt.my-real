@@ -13,24 +13,12 @@ export default function handler(req, res) {
 <head>
   <meta charset="UTF-8">
   <title>Secret</title>
-
-  <style>
-    body {
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 40px;
-    }
-  </style>
 </head>
 
 <body>
-
-  <h1>Welcome to the secret area 🔒</h1>
-
-  <p>Your protected content goes here.</p>
-
+  <h1>Secret Area</h1>
+  <p>You successfully unlocked the secret page.</p>
 </body>
 </html>
-  `);
+`);
 }
