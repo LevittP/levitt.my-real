@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/chatting", "destination": "/chatting.html" }
-  ]
-}
