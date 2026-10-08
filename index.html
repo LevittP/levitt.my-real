@@ -99,11 +99,7 @@
       width: 100vw;
       height: 100vh;
 
-      /*
-        FILL = STRETCHES THE ENTIRE IMAGE
-        TO THE ENTIRE SCREEN.
-        NOTHING GETS CROPPED.
-      */
+      /* Stretch the entire image. No cropping. */
       object-fit: fill;
 
       display: block;
@@ -756,7 +752,7 @@
   </div>
 
 
-  <!-- ACTUAL WEBSITE -->
+  <!-- WEBSITE -->
   <div id="website">
 
     <div class="background-glow"></div>
@@ -770,9 +766,10 @@
 
       <div class="nav-links">
 
+        <!-- GAMES NOW GOES TO /secret -->
         <a
           class="nav-link games"
-          href="/games"
+          href="/secret"
         >
           🎮 Games
         </a>
@@ -809,9 +806,10 @@
 
         <div class="hero-buttons">
 
+          <!-- BROWSE GAMES NOW GOES TO /secret -->
           <a
             class="hero-button primary"
-            href="/games"
+            href="/secret"
           >
             🎮 Browse Games
           </a>
@@ -833,6 +831,7 @@
         <div class="section-title">
 
           <div>
+
             <h2>
               Game Library
             </h2>
@@ -840,6 +839,7 @@
             <p>
               Find something to play.
             </p>
+
           </div>
 
         </div>
@@ -866,9 +866,10 @@
           </div>
 
 
+          <!-- BROWSE BUTTON NOW GOES TO /secret -->
           <a
             class="play-button"
-            href="/games"
+            href="/secret"
           >
             Browse Games →
           </a>
@@ -889,9 +890,9 @@
 
   <script>
     /*
-      The splash screen starts immediately.
-      The actual website stays completely hidden
-      until the 2 second timer finishes.
+      Splash screen appears first.
+      The website stays completely hidden
+      for exactly 2 seconds.
     */
 
     setTimeout(() => {
