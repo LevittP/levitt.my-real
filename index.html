@@ -69,15 +69,12 @@
         );
     }
 
-
-    /* ==================================================
-       SPLASH SCREEN
-       THIS IS THE FIRST THING THE BROWSER SEES
-    ================================================== */
+    /* ==============================
+       LOADING SCREEN
+    ============================== */
 
     #loadingScreen {
       position: fixed;
-
       inset: 0;
 
       width: 100vw;
@@ -86,7 +83,6 @@
       z-index: 999999;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
@@ -103,7 +99,12 @@
       width: 100vw;
       height: 100vh;
 
-      object-fit: cover;
+      /*
+        FILL = STRETCHES THE ENTIRE IMAGE
+        TO THE ENTIRE SCREEN.
+        NOTHING GETS CROPPED.
+      */
+      object-fit: fill;
 
       display: block;
     }
@@ -114,10 +115,9 @@
       pointer-events: none;
     }
 
-
-    /* ==================================================
-       WEBSITE
-    ================================================== */
+    /* ==============================
+       WEBSITE HIDDEN AT FIRST
+    ============================== */
 
     #website {
       visibility: hidden;
@@ -128,14 +128,39 @@
       visibility: visible;
       opacity: 1;
 
-      transition:
-        opacity .35s ease;
+      transition: opacity .35s ease;
     }
 
+    /* ==============================
+       BACKGROUND
+    ============================== */
 
-    /* ==================================================
+    .background-glow {
+      position: fixed;
+
+      width: 700px;
+      height: 700px;
+
+      top: -350px;
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      border-radius: 50%;
+
+      background:
+        rgba(85,191,255,.12);
+
+      filter: blur(90px);
+
+      pointer-events: none;
+
+      z-index: -1;
+    }
+
+    /* ==============================
        NAVIGATION
-    ================================================== */
+    ============================== */
 
     nav {
       position: fixed;
@@ -150,7 +175,6 @@
       z-index: 100;
 
       display: flex;
-
       align-items: center;
       justify-content: space-between;
 
@@ -179,13 +203,11 @@
 
     .brand {
       display: flex;
-
       align-items: center;
 
       gap: 10px;
 
       font-size: 18px;
-
       font-weight: 850;
 
       letter-spacing: -.5px;
@@ -197,7 +219,8 @@
 
       border-radius: 50%;
 
-      background: var(--accent);
+      background:
+        var(--accent);
 
       box-shadow:
         0 0 15px
@@ -206,7 +229,6 @@
 
     .nav-links {
       display: flex;
-
       align-items: center;
 
       gap: 7px;
@@ -234,7 +256,6 @@
       text-decoration: none;
 
       font-size: 14px;
-
       font-weight: 650;
 
       transition:
@@ -262,10 +283,9 @@
         rgba(85,191,255,.28);
     }
 
-
-    /* ==================================================
+    /* ==============================
        HERO
-    ================================================== */
+    ============================== */
 
     .hero {
       min-height: 100vh;
@@ -464,10 +484,9 @@
         rgba(0,80,200,.25);
     }
 
-
-    /* ==================================================
+    /* ==============================
        GAME SECTION
-    ================================================== */
+    ============================== */
 
     .games-section {
       width:
@@ -649,10 +668,9 @@
         rgba(0,100,255,.25);
     }
 
-
-    /* ==================================================
+    /* ==============================
        FOOTER
-    ================================================== */
+    ============================== */
 
     footer {
       width:
@@ -671,10 +689,9 @@
       font-size: 12px;
     }
 
-
-    /* ==================================================
+    /* ==============================
        MOBILE
-    ================================================== */
+    ============================== */
 
     @media (max-width: 700px) {
 
@@ -728,14 +745,9 @@
   </style>
 </head>
 
-
 <body>
 
-  <!--
-    SPLASH SCREEN IS CREATED BEFORE
-    THE ACTUAL WEBSITE EXISTS.
-  -->
-
+  <!-- SPLASH SCREEN -->
   <div id="loadingScreen">
     <img
       src="images/load.png"
@@ -744,12 +756,10 @@
   </div>
 
 
-  <!--
-    EVERYTHING ELSE IS HIDDEN
-    UNTIL THE 2 SECOND SPLASH FINISHES.
-  -->
-
+  <!-- ACTUAL WEBSITE -->
   <div id="website">
+
+    <div class="background-glow"></div>
 
     <nav>
 
@@ -823,7 +833,6 @@
         <div class="section-title">
 
           <div>
-
             <h2>
               Game Library
             </h2>
@@ -831,7 +840,6 @@
             <p>
               Find something to play.
             </p>
-
           </div>
 
         </div>
@@ -881,10 +889,9 @@
 
   <script>
     /*
-      Start the 2 second timer immediately.
-
-      The website is completely hidden until
-      the splash screen has finished.
+      The splash screen starts immediately.
+      The actual website stays completely hidden
+      until the 2 second timer finishes.
     */
 
     setTimeout(() => {
