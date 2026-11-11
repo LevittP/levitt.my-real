@@ -1,0 +1,967 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+}
+
+/* Navbar ------------------------------------------------------- */
+#navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#navstart h3 {
+    font-size: 20px;
+    color: #0168c2;
+}
+
+input {
+    padding: 8px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+input::placeholder {
+    color: #7f8c8d;
+}
+
+#navend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+#navend > a {
+    text-decoration: none;
+    color: #0168c2;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+#navend > a:hover {
+    color: #04519b;
+}
+
+#navend #signup {
+    padding: 10px 20px;
+    background-color: #06a3cf;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#navend #signup:hover {
+    background-color: #027aa7;
+}
+
+/* Hero section ----------------------------------------- */
+#main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background-color: #1b70bb;
+    color: white;
+}
+
+#main h1 {
+    font-size: 40px;
+    line-height: 1.4;
+    font-weight: bold;
+}
+
+#main h1#mainh1 {
+    text-decoration: underline;
+    text-decoration-color: #f1d0ff;
+    text-decoration-thickness: 3px;
+}
+
+#mainptag {
+    width: 70%;
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+#mainbtn {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+}
+
+#mainbtn > button {
+    padding: 15px 30px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+#mainbtn > button:hover {
+    transform: scale(1.05);
+    background-color: #f50057;
+}
+
+/* Section for second section ----------------------------------------- */
+#secondSectionh1 {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 600;
+    margin-top: 80px;
+    color: #0168c2;
+}
+
+#secondSection {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px;
+}
+
+#secondSection > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+#secondSectionContent {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 40px;
+}
+
+#secondSectionContent > div {
+    text-align: center;
+    max-width: 280px;
+}
+
+#secondSectionContent > div h4 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: #333;
+}
+
+#secondSectionContent > div p {
+    color: #555;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+/* Teachers section --------------------------------- */
+#teachersSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 100px;
+    background-color: #fafafa;
+}
+
+#teachersSection > div {
+    width: 50%;
+    text-align: center;
+}
+
+#teachersSection > div h5 {
+    color: #777;
+    font-size: 16px;
+}
+
+#teachersSection > div h1 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#teachersSection > div p {
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+#teachersSection > div button {
+    padding: 15px 30px;
+    background-color: #16a085;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#teachersSection > div button:hover {
+    background-color: #1abc9c;
+}
+
+/* Learners section --------------------------------- */
+#learnersSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 150px;
+    padding: 50px;
+}
+
+#learnersSection > div {
+    width: 50%;
+}
+
+#learnersSection > div h1 {
+    font-size: 50px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#learnersSection > div p {
+    font-size: 20px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+#learnersSection > div button {
+    padding: 15px 30px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#learnersSection > div button:hover {
+    background-color: #3498db;
+}
+
+#learnersSection img {
+    width: 550px;
+}
+
+/* Testimonial section --------------------------------------- */
+#testmonial {
+    background-color: #f2f2f2;
+    padding: 50px;
+    text-align: center;
+}
+
+#testmonial h1 {
+    font-size: 32px;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+#testmonialContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#testmonialContent > div h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #16a085;
+}
+
+#testmonialContent > div p {
+    font-size: 18px;
+    font-weight: 300;
+    color: #777;
+}
+
+#testmonialContent img {
+    border-radius: 50%;
+    width: 150px;
+}
+
+/* Donation section ------------------------------- */
+#donateSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+    background-color: #e0f7fa;
+}
+
+#donateSection > div {
+    width: 60%;
+}
+
+#donateSection h1 {
+    font-size: 45px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#donateSection p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+#donateSection button {
+    padding: 15px 30px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#donateSection button:hover {
+    background-color: #e67e22;
+}
+
+/* Call to Action section -------------------------- */
+#allbtnh1 {
+    text-align: center;
+    font-size: 50px;
+    margin-top: 100px;
+    font-weight: 600;
+    color: #333;
+}
+
+#allButton {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#allButton button {
+    padding: 20px 40px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#allButton button:hover {
+    background-color: #2ecc71;
+}
+
+/* Key Supporters section ------------------------------- */
+#lastSection {
+    background-color: #ecf0f1;
+    padding: 60px;
+    text-align: center;
+}
+
+#lastSection h1 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+#lastSectionimg {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    justify-items: center;
+}
+
+#lastSectionimg img {
+    width: 150px;
+    transition: transform 0.3s ease;
+}
+
+#lastSectionimg img:hover {
+    transform: scale(1.1);
+}
+
+/* ------------------ RESPONSIVENESS -------------------- */
+
+/* For tablets and below (768px) */
+@media (max-width: 768px) {
+    #navBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #main {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    #main h1 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    #mainptag {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #secondSection, 
+    #secondSectionContent,
+    #teachersSection, 
+    #learnersSection {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #secondSection h1 {
+        font-size: 30px;
+    }
+
+    #secondSectionContent > div {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    #testmonialContent {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #donateSection {
+        flex-direction: column;
+    }
+
+    #allButton {
+        flex-direction: column;
+    }
+}
+
+/* Default styling (for laptops and larger screens) */
+
+/* Add media queries for responsive design */
+@media (max-width: 1024px) {
+    /* Adjust the navbar */
+    #navBar {
+        padding: 15px;
+    }
+    #navstart h3 {
+        font-size: 18px;
+    }
+    input {
+        width: 150px;
+    }
+
+    #navend > a {
+        font-size: 16px;
+    }
+
+    #main {
+        flex-direction: column;
+        padding: 30px;
+        text-align: center;
+    }
+
+    #main h1 {
+        font-size: 30px;
+    }
+
+    #mainptag {
+        font-size: 16px;
+    }
+
+    #mainbtn {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    #secondSection {
+        flex-direction: column;
+    }
+
+    #secondSection h1 {
+        font-size: 36px;
+    }
+
+    #secondSectionContent {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    #secondSectionContent > div {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #teachersSection {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    #teachersSection > div {
+        width: 100%;
+        text-align: center;
+    }
+
+    #learnersSection {
+        flex-direction: column;
+        margin-top: 100px;
+        padding: 20px;
+    }
+
+    #learnersSection img {
+        width: 100%;
+        max-width: 450px;
+        margin-top: 20px;
+    }
+
+    #testmonial {
+        padding: 30px;
+    }
+
+    #donateSection {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    #donateSection > div {
+        width: 100%;
+    }
+
+    #allButton {
+        flex-direction: column;
+    }
+
+    #lastSection {
+        padding: 40px 20px;
+    }
+
+    #lastSectionimg {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #lastSectionimg img {
+        width: 100px;
+    }
+}
+
+/* Media query for tablets (portrait mode) */
+@media (max-width: 768px) {
+    #navBar {
+        padding: 10px;
+    }
+    #navstart h3 {
+        font-size: 16px;
+    }
+    input {
+        width: 130px;
+    }
+
+    #navend > a {
+        font-size: 14px;
+    }
+
+    #main {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+    }
+
+    #main h1 {
+        font-size: 28px;
+    }
+
+    #mainptag {
+        font-size: 14px;
+    }
+
+    #mainbtn {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    #secondSection {
+        flex-direction: column;
+    }
+
+    #secondSectionContent {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    #teachersSection {
+        flex-direction: column;
+        padding: 30px 10px;
+    }
+
+    #learnersSection {
+        flex-direction: column;
+        margin-top: 80px;
+        padding: 20px;
+    }
+
+    #learnersSection img {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    #testmonial {
+        padding: 20px;
+    }
+
+    #donateSection {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    #donateSection > div {
+        width: 100%;
+    }
+
+    #allButton {
+        flex-direction: column;
+    }
+
+    #lastSectionimg {
+        grid-template-columns: 1fr;
+    }
+
+    #lastSectionimg img {
+        width: 80px;
+    }
+}
+
+/* Media query for mobile screens */
+@media (max-width: 480px) {
+    #navBar {
+        padding: 8px;
+    }
+    #navstart h3 {
+        font-size: 14px;
+    }
+    input {
+        width: 100px;
+    }
+
+    #navend > a {
+        font-size: 12px;
+    }
+
+    #main {
+        flex-direction: column;
+        padding: 15px;
+        text-align: center;
+    }
+
+    #main h1 {
+        font-size: 24px;
+    }
+
+    #mainptag {
+        font-size: 12px;
+    }
+
+    #mainbtn {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    #secondSection {
+        flex-direction: column;
+        margin-top: 40px;
+    }
+
+    #secondSectionContent {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    #teachersSection {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+
+    #learnersSection {
+        flex-direction: column;
+        margin-top: 60px;
+        padding: 10px;
+    }
+
+    #learnersSection img {
+        width: 100%;
+        max-width: 300px;
+        margin-top: 10px;
+    }
+
+    #testmonial {
+        padding: 10px;
+    }
+
+    #donateSection {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    #donateSection > div {
+        width: 100%;
+    }
+
+    #allButton {
+        flex-direction: column;
+    }
+
+    #lastSectionimg {
+        grid-template-columns: 1fr;
+    }
+
+    #lastSectionimg img {
+        width: 60px;
+    }
+}
+
+
+
+
+/* Default styling (for laptops and larger screens) */
+img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* For devices smaller than 1024px (tablets and below) */
+@media (max-width: 1024px) {
+    img {
+        max-width: 100%; /* Ensure images are not larger than their container */
+        height: auto;
+        object-fit: contain; /* Keep aspect ratio intact */
+    }
+
+    /* Specific image adjustments for smaller sections */
+    #learnersSection img {
+        width: 100%;
+        max-width: 450px;
+        margin-top: 20px;
+    }
+
+    #lastSectionimg img {
+        width: 100px;
+    }
+}
+
+/* Media query for tablets (portrait mode) */
+@media (max-width: 768px) {
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    #learnersSection img {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    #lastSectionimg img {
+        width: 80px;
+    }
+}
+
+/* Media query for mobile screens */
+@media (max-width: 480px) {
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    #learnersSection img {
+        width: 100%;
+        max-width: 300px;
+        margin-top: 10px;
+    }
+
+    #lastSectionimg img {
+        width: 60px;
+    }
+}
+
+
+
+
+/* footersection----------------------- */
+
+  footer {
+    overflow-x: hidden;
+    width: 100%;
+    font-family: Lato, "Noto Sans", sans-serif;
+    background-color: #0b2149;
+    color: #8295ba;
+    padding: 15px 0px;
+    box-sizing: border-box;
+    padding-left: 10%;
+    font-size: 13px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  a:hover,
+  #selectLangBtn:hover {
+    text-decoration: underline;
+  }
+  
+  #fcontainer {
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+  
+  #fTopPart {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: baseline;
+  }
+  #fDetail {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: #8295ba;
+    font-size: 20px;
+  }
+  #fDetail a {
+    font-size: 20px;
+  }
+  
+  /* Links style */
+  #fLinks {
+    display: flex;
+    gap: 10px;
+  }
+  
+  #fLinks > div {
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .appImg {
+    width: 100px;
+    height: 33px;
+  }
+  
+  #fContact h2 {
+    color: white;
+    font-size: 13px;
+    margin-top: 40px;
+    margin-bottom: 0%;
+  }
+  
+  #fContact > div {
+    margin-left: 5px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* language and coutry part */
+  #flanguage {
+    display: flex;
+    align-items: center;
+    justify-content: last baseline;
+    height: 20px;
+  }
+  #flanguage > span:last-child {
+    color: white;
+    font-size: 20px;
+    margin-top: -13px;
+    margin-left: -3px;
+  }
+  #selectLangBtn {
+    background-color: #0b2149;
+    border: none;
+    color: white;
+  }
+  
+  #fCountry img {
+    width: 16px;
+    height: 15px;
+    margin-bottom: -3px;
+    margin-left: 10px;
+  }
+  
+  /* most bottom part */
+  #fBottomPart {
+    width: 90%;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #fBottomPart a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    align-items: center;
+    color: #ffffff;
+    display: inline-block;
+  }
+  
+  #mediaLinks {
+    display: flex;
+  }
+  
+  #mediaLinks span {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 10px;
+  }
+  .fbLogo {
+    background-image: url("https://cdn.kastatic.org/genwebpack/prod/en/images/e5b43b9c0717d989-facebook-logo-fill.svg");
+  }
+  .twLogo {
+    background-image: url("https://cdn.kastatic.org/genwebpack/prod/en/images/f5240dcae2b53974-twitter-logo-fill.svg");
+  }
+  .instaLogo {
+    background-image: url("https://cdn.kastatic.org/genwebpack/prod/en/images/62e92f7fbb787def-instagram-logo-fill.svg");
+  }
+  
+  .copyrightDiv a {
+    margin-left: 10px;
+  }
+  
+  @media screen and (max-width: 780px) {
+    #fTopPart {
+      flex-direction: column;
+    }
+    #fDetail {
+      width: 100%;
+      flex-direction: row;
+    }
+  }
