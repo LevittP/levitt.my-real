@@ -1,10 +1,3 @@
---// Rivals Glow + Aim Lock V2 - Enhanced
---// Auto ON - Top Right - Team Skip
---// Head/Torso Selector - Strong Aim - Strong Glow
---// Auto Aim OFF by default - Auto Shoot with wall detection
---// Reliable team detection only
---// Tab to toggle menu
-
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -13,11 +6,10 @@ local Workspace = game:GetService("Workspace")
 local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
--- SETTINGS
-local aimEnabled = false -- Auto OFF now
+local aimEnabled = false
 local glowEnabled = true
-local aimToggled = false -- Auto OFF
-local menuVisible = true -- Menu starts visible
+local aimToggled = false
+local menuVisible = true
 
 local aimKey = Enum.KeyCode.E
 local menuKey = Enum.KeyCode.Tab
@@ -30,12 +22,19 @@ local outlineColor = Color3.fromRGB(0, 200, 255)
 
 local highlights = {}
 
--- Auto Shoot Settings
 local autoShootEnabled = true
 local shootCooldown = 0.1
 local lastShootTime = 0
 
--- GUI
+local blacklistedPlayers = {
+    ["MountainLion_01"] = true,
+    ["BigB3llyBilly"] = true,
+    ["EPICfan100"] = true,
+    ["EPIC_GAMER3912"] = true,
+    ["Yesvoice"] = true,
+    ["timmmmmmmmmytimmmmmy"] = true
+}
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "RivalsGlowAim"
 ScreenGui.ResetOnSpawn = false
@@ -73,7 +72,6 @@ local function createButton(name, text, position)
     return button
 end
 
--- TITLE
 local TitleBar = Instance.new("Frame")
 TitleBar.Size = UDim2.new(1, 0, 0, 40)
 TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
@@ -89,7 +87,6 @@ Title.TextScaled = true
 Title.Font = Enum.Font.GothamBold
 Title.Parent = TitleBar
 
--- BUTTONS
 local GlowToggle = createButton(
     "GlowToggle",
     "Glow: ON",
@@ -130,20 +127,23 @@ StatusLabel.TextScaled = true
 StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.Parent = MainFrame
 
--- RELIABLE TEAM DETECTION
+local function isBlacklisted(player)
+    return blacklistedPlayers[player.Name] == true
+end
+
 local function isTeammate(player)
-    -- Method 1: Check if it's the local player
+    
     if player == LocalPlayer then
         return true
     end
     
-    -- Method 2: Check team property
+
     if player.Team and LocalPlayer.Team then
         if player.Team == LocalPlayer.Team then
             return true
         end
         
-        -- Check team colors
+
         if player.Team.TeamColor and LocalPlayer.Team.TeamColor then
             if player.Team.TeamColor == LocalPlayer.Team.TeamColor then
                 return true
@@ -151,15 +151,15 @@ local function isTeammate(player)
         end
     end
     
-    -- Method 3: Check friends list
+
     if player:IsFriendsWith(LocalPlayer.UserId) then
         return true
     end
     
-    -- Method 4: Check character attributes
+
     local character = player.Character
     if character then
-        -- Check for team-related attributes
+
         if character:GetAttribute("Team") then
             local localTeam = LocalPlayer.Character and LocalPlayer.Character:GetAttribute("Team")
             if character:GetAttribute("Team") == localTeam then
@@ -167,7 +167,7 @@ local function isTeammate(player)
             end
         end
         
-        -- Check for team tags or markers
+ 
         local teamTag = character:FindFirstChild("TeamTag") or character:FindFirstChild("TeamName")
         if teamTag then
             local localTag = LocalPlayer.Character and (LocalPlayer.Character:FindFirstChild("TeamTag") or LocalPlayer.Character:FindFirstChild("TeamName"))
@@ -177,14 +177,14 @@ local function isTeammate(player)
         end
     end
     
-    -- Method 5: Check player attributes
+ 
     if player:GetAttribute("Team") then
         if player:GetAttribute("Team") == LocalPlayer:GetAttribute("Team") then
             return true
         end
     end
     
-    -- Method 6: Check player tags
+
     if player:FindFirstChild("leaderstats") then
         local leaderstats = player.leaderstats
         local teamStat = leaderstats:FindFirstChild("Team") or leaderstats:FindFirstChild("TeamName")
@@ -196,7 +196,7 @@ local function isTeammate(player)
         end
     end
     
-    -- Method 7: Check for team-colored highlights or indicators in character
+
     if character then
         local teamIndicator = character:FindFirstChild("TeamIndicator") or 
                              character:FindFirstChild("TeamColor") or
@@ -212,11 +212,11 @@ local function isTeammate(player)
         end
     end
     
-    -- If none of the methods detected a teammate, it's an enemy
+
     return false
 end
 
--- WALL DETECTION
+
 local function isBehindWall(targetPart)
     if not targetPart then
         return true
@@ -234,11 +234,11 @@ local function isBehindWall(targetPart)
     if raycastResult then
         local hitPart = raycastResult.Instance
         if hitPart then
-            -- Check if we hit the target or something close to it
+
             if hitPart:IsDescendantOf(targetPart.Parent) then
-                return false -- Not behind wall
+                return false
             else
-                return true -- Behind wall
+                return true
             end
         end
     end
@@ -246,7 +246,7 @@ local function isBehindWall(targetPart)
     return false
 end
 
--- STRONG GLOW
+
 local function createHighlight(character)
     if highlights[character] then
         return
@@ -269,7 +269,7 @@ end
 
 local function updateGlow()
     for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer then
+        if player ~= LocalPlayer and not isBlacklisted(player) then
             if not isTeammate(player) and player.Character then
                 createHighlight(player.Character)
             else
@@ -278,11 +278,15 @@ local function updateGlow()
                     highlights[player.Character] = nil
                 end
             end
+        elseif isBlacklisted(player) and player.Character and highlights[player.Character] then
+
+            highlights[player.Character]:Destroy()
+            highlights[player.Character] = nil
         end
     end
 end
 
--- REMOVE OLD HIGHLIGHTS
+
 local function cleanupHighlights()
     for character, highlight in pairs(highlights) do
         if not character.Parent then
@@ -292,7 +296,7 @@ local function cleanupHighlights()
     end
 end
 
--- TARGET FINDER
+
 local function getTargetPart(character)
     if targetPart == "Head" then
         return character:FindFirstChild("Head")
@@ -310,14 +314,17 @@ local function getClosestTarget()
     local mousePosition = UserInputService:GetMouseLocation()
 
     for _, player in ipairs(Players:GetPlayers()) do
-        -- Skip if it's the local player or a teammate
-        if player ~= LocalPlayer and not isTeammate(player) and player.Character then
+
+        if player ~= LocalPlayer 
+            and not isTeammate(player) 
+            and not isBlacklisted(player) 
+            and player.Character then
 
             local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
             local part = getTargetPart(player.Character)
 
             if humanoid and humanoid.Health > 0 and part then
-                -- Skip if behind wall for shooting
+
                 if autoShootEnabled and isBehindWall(part) then
                     continue
                 end
@@ -343,7 +350,7 @@ local function getClosestTarget()
     return closest
 end
 
--- AUTO SHOOT FUNCTION
+
 local function autoShoot(targetPart)
     if not autoShootEnabled then
         return
@@ -354,20 +361,20 @@ local function autoShoot(targetPart)
         return
     end
     
-    -- Check if target is not behind wall
+
     if isBehindWall(targetPart) then
         return
     end
     
-    -- Simulate click
+
     local mouse = LocalPlayer:GetMouse()
     if mouse then
-        mouse1click() -- Simulate left click to shoot
+        mouse1click()
         lastShootTime = currentTime
     end
 end
 
--- MAIN LOOP
+
 RunService.RenderStepped:Connect(function()
     if glowEnabled then
         updateGlow()
@@ -378,7 +385,7 @@ RunService.RenderStepped:Connect(function()
         local target = getClosestTarget()
 
         if target then
-            -- Check if target is not behind wall
+
             if not isBehindWall(target) then
                 local screenPosition =
                     Camera:WorldToViewportPoint(target.Position)
@@ -396,7 +403,7 @@ RunService.RenderStepped:Connect(function()
                     mousemoverel(deltaX, deltaY)
                 end
                 
-                -- Auto shoot if enabled and target visible
+
                 if autoShootEnabled then
                     autoShoot(target)
                 end
@@ -405,7 +412,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- BUTTON COLORS
+
 local function updateButton(button, enabled, text)
     button.Text = text
 
@@ -414,7 +421,7 @@ local function updateButton(button, enabled, text)
         or Color3.fromRGB(255, 80, 80)
 end
 
--- GLOW BUTTON
+
 GlowToggle.MouseButton1Click:Connect(function()
     glowEnabled = not glowEnabled
 
@@ -433,10 +440,10 @@ GlowToggle.MouseButton1Click:Connect(function()
     end
 end)
 
--- AIM BUTTON
+
 AimToggle.MouseButton1Click:Connect(function()
     aimEnabled = not aimEnabled
-    aimToggled = aimEnabled -- Sync with toggle
+    aimToggled = aimEnabled
 
     updateButton(
         AimToggle,
@@ -449,7 +456,7 @@ AimToggle.MouseButton1Click:Connect(function()
         or "Aim Lock OFF | E to toggle"
 end)
 
--- AUTO SHOOT BUTTON
+
 AutoShootToggle.MouseButton1Click:Connect(function()
     autoShootEnabled = not autoShootEnabled
 
@@ -460,7 +467,7 @@ AutoShootToggle.MouseButton1Click:Connect(function()
     )
 end)
 
--- HEAD / TORSO SWITCH
+
 TargetToggle.MouseButton1Click:Connect(function()
     if targetPart == "Head" then
         targetPart = "Torso"
@@ -471,7 +478,7 @@ TargetToggle.MouseButton1Click:Connect(function()
     TargetToggle.Text = "Target Part: " .. string.upper(targetPart)
 end)
 
--- AIM STRENGTH
+
 StrengthToggle.MouseButton1Click:Connect(function()
     if aimStrength == 0.35 then
         aimStrength = 0.50
@@ -485,16 +492,15 @@ StrengthToggle.MouseButton1Click:Connect(function()
     end
 end)
 
--- KEY TOGGLES
+
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then
         return
     end
 
-    -- E KEY TOGGLE AIM
     if input.KeyCode == aimKey then
         aimToggled = not aimToggled
-        aimEnabled = aimToggled -- Sync
+        aimEnabled = aimToggled
 
         StatusLabel.Text = aimToggled
             and "Aim Lock ACTIVE"
@@ -509,7 +515,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         print("Aim Lock: " .. (aimToggled and "ON" or "OFF"))
     end
     
-    -- TAB KEY TOGGLE MENU
+
     if input.KeyCode == menuKey then
         menuVisible = not menuVisible
         MainFrame.Visible = menuVisible
@@ -517,7 +523,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     end
 end)
 
--- RESPAWN CLEANUP
+
 LocalPlayer.CharacterAdded:Connect(function()
     for _, highlight in pairs(highlights) do
         highlight:Destroy()
