@@ -1,18 +1,20 @@
---// Rivals Glow + Aim Lock V2
+--// Rivals Glow + Aim Lock V2 - Enhanced
 --// Auto ON - Top Right - Team Skip
 --// Head/Torso Selector - Strong Aim - Strong Glow
+--// Auto Aim OFF by default - Auto Shoot with wall detection
 
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
 
 local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
 -- SETTINGS
-local aimEnabled = true
+local aimEnabled = false -- Auto OFF now
 local glowEnabled = true
-local aimToggled = true
+local aimToggled = false -- Auto OFF
 
 local aimKey = Enum.KeyCode.E
 
@@ -24,6 +26,11 @@ local outlineColor = Color3.fromRGB(0, 200, 255)
 
 local highlights = {}
 
+-- Auto Shoot Settings
+local autoShootEnabled = true
+local shootCooldown = 0.1
+local lastShootTime = 0
+
 -- GUI
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "RivalsGlowAim"
@@ -31,7 +38,7 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 290, 0, 285)
+MainFrame.Size = UDim2.new(0, 290, 0, 330)
 MainFrame.Position = UDim2.new(1, -310, 0, 10)
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 MainFrame.BorderSizePixel = 0
@@ -72,7 +79,7 @@ TitleBar.Parent = MainFrame
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(1, 0, 1, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "Rivals Glow + Aim Lock"
+Title.Text = "Rivals Glow + Aim Lock V2"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextScaled = true
 Title.Font = Enum.Font.GothamBold
@@ -87,27 +94,33 @@ local GlowToggle = createButton(
 
 local AimToggle = createButton(
     "AimToggle",
-    "Aim Lock: ON",
+    "Aim Lock: OFF",
     UDim2.new(0.05, 0, 0, 100)
+)
+
+local AutoShootToggle = createButton(
+    "AutoShootToggle",
+    "Auto Shoot: ON",
+    UDim2.new(0.05, 0, 0, 145)
 )
 
 local TargetToggle = createButton(
     "TargetToggle",
     "Target Part: HEAD",
-    UDim2.new(0.05, 0, 0, 145)
+    UDim2.new(0.05, 0, 0, 190)
 )
 
 local StrengthToggle = createButton(
     "StrengthToggle",
     "Aim Strength: MAX",
-    UDim2.new(0.05, 0, 0, 190)
+    UDim2.new(0.05, 0, 0, 235)
 )
 
 local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Size = UDim2.new(0.9, 0, 0, 25)
-StatusLabel.Position = UDim2.new(0.05, 0, 0, 245)
+StatusLabel.Position = UDim2.new(0.05, 0, 0, 290)
 StatusLabel.BackgroundTransparency = 1
-StatusLabel.Text = "E = Toggle Aim"
+StatusLabel.Text = "E = Toggle Aim | Aim OFF"
 StatusLabel.TextColor3 = Color3.fromRGB(180, 180, 200)
 StatusLabel.TextScaled = true
 StatusLabel.Font = Enum.Font.Gotham
@@ -123,6 +136,41 @@ local function isTeammate(player)
         return player.Team == LocalPlayer.Team
     end
 
+    -- Check for friend status
+    if player:IsFriendsWith(LocalPlayer.UserId) then
+        return true
+    end
+
+    return false
+end
+
+-- WALL DETECTION
+local function isBehindWall(targetPart)
+    if not targetPart then
+        return true
+    end
+    
+    local origin = Camera.CFrame.Position
+    local target = targetPart.Position
+    
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character}
+    
+    local raycastResult = workspace:Raycast(origin, (target - origin).Unit * (origin - target).Magnitude, raycastParams)
+    
+    if raycastResult then
+        local hitPart = raycastResult.Instance
+        if hitPart then
+            -- Check if we hit the target or something close to it
+            if hitPart:IsDescendantOf(targetPart.Parent) then
+                return false -- Not behind wall
+            else
+                return true -- Behind wall
+            end
+        end
+    end
+    
     return false
 end
 
@@ -198,6 +246,11 @@ local function getClosestTarget()
             local part = getTargetPart(player.Character)
 
             if humanoid and humanoid.Health > 0 and part then
+                -- Skip if behind wall for shooting
+                if autoShootEnabled and isBehindWall(part) then
+                    continue
+                end
+                
                 local screenPosition, onScreen =
                     Camera:WorldToViewportPoint(part.Position)
 
@@ -219,6 +272,30 @@ local function getClosestTarget()
     return closest
 end
 
+-- AUTO SHOOT FUNCTION
+local function autoShoot(targetPart)
+    if not autoShootEnabled then
+        return
+    end
+    
+    local currentTime = tick()
+    if currentTime - lastShootTime < shootCooldown then
+        return
+    end
+    
+    -- Check if target is not behind wall
+    if isBehindWall(targetPart) then
+        return
+    end
+    
+    -- Simulate click
+    local mouse = LocalPlayer:GetMouse()
+    if mouse then
+        mouse1click() -- Simulate left click to shoot
+        lastShootTime = currentTime
+    end
+end
+
 -- MAIN LOOP
 RunService.RenderStepped:Connect(function()
     if glowEnabled then
@@ -230,20 +307,28 @@ RunService.RenderStepped:Connect(function()
         local target = getClosestTarget()
 
         if target then
-            local screenPosition =
-                Camera:WorldToViewportPoint(target.Position)
+            -- Check if target is not behind wall
+            if not isBehindWall(target) then
+                local screenPosition =
+                    Camera:WorldToViewportPoint(target.Position)
 
-            local mousePosition =
-                UserInputService:GetMouseLocation()
+                local mousePosition =
+                    UserInputService:GetMouseLocation()
 
-            local deltaX =
-                (screenPosition.X - mousePosition.X) * aimStrength
+                local deltaX =
+                    (screenPosition.X - mousePosition.X) * aimStrength
 
-            local deltaY =
-                (screenPosition.Y - mousePosition.Y) * aimStrength
+                local deltaY =
+                    (screenPosition.Y - mousePosition.Y) * aimStrength
 
-            if mousemoverel then
-                mousemoverel(deltaX, deltaY)
+                if mousemoverel then
+                    mousemoverel(deltaX, deltaY)
+                end
+                
+                -- Auto shoot if enabled and target visible
+                if autoShootEnabled then
+                    autoShoot(target)
+                end
             end
         end
     end
@@ -280,11 +365,27 @@ end)
 -- AIM BUTTON
 AimToggle.MouseButton1Click:Connect(function()
     aimEnabled = not aimEnabled
+    aimToggled = aimEnabled -- Sync with toggle
 
     updateButton(
         AimToggle,
         aimEnabled,
         "Aim Lock: " .. (aimEnabled and "ON" or "OFF")
+    )
+    
+    StatusLabel.Text = aimEnabled 
+        and "Aim Lock ACTIVE | E to toggle" 
+        or "Aim Lock OFF | E to toggle"
+end)
+
+-- AUTO SHOOT BUTTON
+AutoShootToggle.MouseButton1Click:Connect(function()
+    autoShootEnabled = not autoShootEnabled
+
+    updateButton(
+        AutoShootToggle,
+        autoShootEnabled,
+        "Auto Shoot: " .. (autoShootEnabled and "ON" or "OFF")
     )
 end)
 
@@ -321,10 +422,17 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 
     if input.KeyCode == aimKey then
         aimToggled = not aimToggled
+        aimEnabled = aimToggled -- Sync
 
         StatusLabel.Text = aimToggled
             and "Aim Lock ACTIVE"
             or "Aim Lock PAUSED"
+
+        updateButton(
+            AimToggle,
+            aimEnabled,
+            "Aim Lock: " .. (aimEnabled and "ON" or "OFF")
+        )
 
         print("Aim Lock: " .. (aimToggled and "ON" or "OFF"))
     end
@@ -339,8 +447,9 @@ LocalPlayer.CharacterAdded:Connect(function()
     highlights = {}
 end)
 
-print("Rivals Glow + Aim Lock V2 loaded!")
+print("Rivals Glow + Aim Lock V2 Enhanced loaded!")
 print("Default Target: HEAD")
 print("Default Aim Strength: MAX")
 print("Default Glow: STRONG")
-print("Press E to toggle Aim Lock")
+print("Aim Lock: OFF (Press E to enable)")
+print("Auto Shoot: ON (with wall detection)")
