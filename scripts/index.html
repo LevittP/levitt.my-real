@@ -1,0 +1,424 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Copy</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #080d18;
+    color: white;
+    min-height: 100vh;
+    padding: 50px 20px;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #8995aa;
+    font-size: 15px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.copy-btn {
+    background: #111b2e;
+    border: 1px solid #253550;
+    border-radius: 12px;
+    padding: 22px;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.copy-btn:hover {
+    background: #192944;
+    border-color: #3685ff;
+    transform: translateY(-2px);
+}
+
+.copy-btn:active {
+    transform: scale(0.98);
+}
+
+.copy-btn h3 {
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+
+.copy-btn p {
+    font-size: 12px;
+    color: #8995aa;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1c2b42;
+    border: 1px solid #3685ff;
+    color: white;
+    padding: 13px 22px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: 0.25s;
+    pointer-events: none;
+    font-size: 14px;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 550px) {
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 29px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Quick Copy</h1>
+        <p>Click a button to instantly copy something to your clipboard.</p>
+    </div>
+
+    <div class="button-grid" id="buttonGrid"></div>
+
+</div>
+
+<div class="toast" id="toast">Copied to clipboard!</div>
+
+<script>
+
+// ==========================================
+// CUSTOMIZE YOUR BUTTONS HERE
+// ==========================================
+
+const buttons = [
+    {
+        name: "Dropkicker (fling)",
+        text: "loadstring(game:HttpGet("https://raw.githubusercontent.com/WithKevinDev/Kevin-Hub-DropKicker/refs/heads/main/main.lua")"
+    },
+    {
+        name: "Product Faker",
+        text: "loadstring(game:HttpGet("https://robloxscripts.com/raw/product-faker-20?src=api"))()"
+    },
+    {
+        name: "Rivals Aimlock + Glow",
+        text: "--// Glow + Aim Lock for Rivals (Auto ON - Top Right - Team Skip)
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local aimEnabled = true
+local glowEnabled = true
+local aimToggled = true
+local aimKey = Enum.KeyCode.E
+
+-- GUI (Top Right)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "RivalsGlowAim"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 290, 0, 190)
+MainFrame.Position = UDim2.new(1, -310, 0, 10)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+TitleBar.BorderSizePixel = 0
+TitleBar.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 12)
+TitleCorner.Parent = TitleBar
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 1, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "Rivals Glow + Aim Lock"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextScaled = true
+Title.Font = Enum.Font.GothamBold
+Title.Parent = TitleBar
+
+-- Glow Toggle
+local GlowToggle = Instance.new("TextButton")
+GlowToggle.Size = UDim2.new(0.9, 0, 0, 38)
+GlowToggle.Position = UDim2.new(0.05, 0, 0.3, 0)
+GlowToggle.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+GlowToggle.Text = "Glow: ON"
+GlowToggle.TextColor3 = Color3.fromRGB(0, 255, 120)
+GlowToggle.TextScaled = true
+GlowToggle.Font = Enum.Font.GothamSemibold
+GlowToggle.Parent = MainFrame
+
+local GlowCorner = Instance.new("UICorner")
+GlowCorner.CornerRadius = UDim.new(0, 10)
+GlowCorner.Parent = GlowToggle
+
+-- Aim Toggle
+local AimToggle = Instance.new("TextButton")
+AimToggle.Size = UDim2.new(0.9, 0, 0, 38)
+AimToggle.Position = UDim2.new(0.05, 0, 0.55, 0)
+AimToggle.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+AimToggle.Text = "Aim Lock (E Toggle): ON"
+AimToggle.TextColor3 = Color3.fromRGB(0, 255, 120)
+AimToggle.TextScaled = true
+AimToggle.Font = Enum.Font.GothamSemibold
+AimToggle.Parent = MainFrame
+
+local AimCorner = Instance.new("UICorner")
+AimCorner.CornerRadius = UDim.new(0, 10)
+AimCorner.Parent = AimToggle
+
+local highlights = {}
+
+local function isTeammate(plr)
+    if plr == LocalPlayer then return true end
+    if plr.Team and LocalPlayer.Team and plr.Team == LocalPlayer.Team then
+        return true
+    end
+    return false
+end
+
+local function createHighlight(char)
+    if highlights[char] then return end
+    local highlight = Instance.new("Highlight")
+    highlight.FillColor = Color3.fromRGB(0, 255, 170)
+    highlight.OutlineColor = Color3.fromRGB(0, 200, 255)
+    highlight.FillTransparency = 0.35
+    highlight.OutlineTransparency = 0
+    highlight.Parent = char
+    highlights[char] = highlight
+end
+
+local function updateGlow()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and not isTeammate(player) and player.Character then
+            if not highlights[player.Character] then
+                createHighlight(player.Character)
+            end
+        end
+    end
+end
+
+local function getClosestRootPart()
+    local closest = nil
+    local shortestDist = math.huge
+    local mousePos = UserInputService:GetMouseLocation()
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and not isTeammate(player) and player.Character then
+            local root = player.Character:FindFirstChild("HumanoidRootPart")
+            if root then
+                local screenPos, onScreen = Camera:WorldToViewportPoint(root.Position)
+                if onScreen then
+                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                    if distance < shortestDist and distance < 800 then
+                        shortestDist = distance
+                        closest = root
+                    end
+                end
+            end
+        end
+    end
+    return closest
+end
+
+-- Main Loop
+RunService.RenderStepped:Connect(function()
+    if glowEnabled then
+        updateGlow()
+    end
+
+    if aimToggled and aimEnabled then
+        local targetRoot = getClosestRootPart()
+        if targetRoot then
+            local targetPos = Camera:WorldToViewportPoint(targetRoot.Position)
+            local mousePos = UserInputService:GetMouseLocation()
+
+            local deltaX = (targetPos.X - mousePos.X) * 0.16
+            local deltaY = (targetPos.Y - mousePos.Y) * 0.16
+
+            mousemoverel(deltaX, deltaY)
+        end
+    end
+end)
+
+-- Button Toggles
+GlowToggle.MouseButton1Click:Connect(function()
+    glowEnabled = not glowEnabled
+    GlowToggle.Text = "Glow: " .. (glowEnabled and "ON" or "OFF")
+    GlowToggle.TextColor3 = glowEnabled and Color3.fromRGB(0, 255, 120) or Color3.fromRGB(255, 80, 80)
+end)
+
+AimToggle.MouseButton1Click:Connect(function()
+    aimEnabled = not aimEnabled
+    AimToggle.Text = "Aim Lock (E Toggle): " .. (aimEnabled and "ON" or "OFF")
+    AimToggle.TextColor3 = aimEnabled and Color3.fromRGB(0, 255, 120) or Color3.fromRGB(255, 80, 80)
+end)
+
+-- E Toggle for Aimbot
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == aimKey then
+        aimToggled = not aimToggled
+        print("Aim Lock Toggled: " .. (aimToggled and "ON" or "OFF"))
+    end
+end)
+
+-- Cleanup
+LocalPlayer.CharacterAdded:Connect(function()
+    highlights = {}
+end)
+
+print("✅ Rivals Glow + Aim Lock loaded (Auto ON - Team Skip)")
+print("GUI in top right | Press E to toggle aimbot")"
+    },
+    {
+        name: "Button 4",
+        text: "Your fourth copied text"
+    },
+    {
+        name: "Button 5",
+        text: "Your fifth copied text"
+    },
+    {
+        name: "Button 6",
+        text: "Your sixth copied text"
+    },
+    {
+        name: "Button 7",
+        text: "Your seventh copied text"
+    },
+    {
+        name: "Button 8",
+        text: "Your eighth copied text"
+    },
+    {
+        name: "Button 9",
+        text: "Your ninth copied text"
+    },
+    {
+        name: "Button 10",
+        text: "Your tenth copied text"
+    }
+];
+
+// ==========================================
+// DO NOT EDIT BELOW UNLESS YOU WANT TO
+// CUSTOMIZE HOW THE PAGE WORKS
+// ==========================================
+
+const grid = document.getElementById("buttonGrid");
+const toast = document.getElementById("toast");
+
+buttons.forEach((button, index) => {
+
+    const btn = document.createElement("button");
+    btn.className = "copy-btn";
+
+    const title = document.createElement("h3");
+    title.textContent = button.name;
+
+    const description = document.createElement("p");
+    description.textContent = button.text;
+
+    btn.appendChild(title);
+    btn.appendChild(description);
+
+    btn.addEventListener("click", () => {
+        copyText(button.text, button.name);
+    });
+
+    grid.appendChild(btn);
+
+});
+
+async function copyText(text, name) {
+
+    try {
+        await navigator.clipboard.writeText(text);
+
+        toast.textContent = "✓ " + name + " copied!";
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimeout);
+
+        window.toastTimeout = setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2000);
+
+    } catch (error) {
+        toast.textContent = "Clipboard access failed!";
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimeout);
+
+        window.toastTimeout = setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2000);
+    }
+
+}
+
+</script>
+
+</body>
+</html>
+```
