@@ -2,6 +2,8 @@
 --// Auto ON - Top Right - Team Skip
 --// Head/Torso Selector - Strong Aim - Strong Glow
 --// Auto Aim OFF by default - Auto Shoot with wall detection
+--// Reliable team detection only
+--// Tab to toggle menu
 
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
@@ -15,8 +17,10 @@ local LocalPlayer = Players.LocalPlayer
 local aimEnabled = false -- Auto OFF now
 local glowEnabled = true
 local aimToggled = false -- Auto OFF
+local menuVisible = true -- Menu starts visible
 
 local aimKey = Enum.KeyCode.E
+local menuKey = Enum.KeyCode.Tab
 
 local aimStrength = 0.35
 local targetPart = "Head"
@@ -120,27 +124,95 @@ local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Size = UDim2.new(0.9, 0, 0, 25)
 StatusLabel.Position = UDim2.new(0.05, 0, 0, 290)
 StatusLabel.BackgroundTransparency = 1
-StatusLabel.Text = "E = Toggle Aim | Aim OFF"
+StatusLabel.Text = "E = Toggle Aim | Tab = Menu"
 StatusLabel.TextColor3 = Color3.fromRGB(180, 180, 200)
 StatusLabel.TextScaled = true
 StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.Parent = MainFrame
 
--- TEAM CHECK
+-- RELIABLE TEAM DETECTION
 local function isTeammate(player)
+    -- Method 1: Check if it's the local player
     if player == LocalPlayer then
         return true
     end
-
+    
+    -- Method 2: Check team property
     if player.Team and LocalPlayer.Team then
-        return player.Team == LocalPlayer.Team
+        if player.Team == LocalPlayer.Team then
+            return true
+        end
+        
+        -- Check team colors
+        if player.Team.TeamColor and LocalPlayer.Team.TeamColor then
+            if player.Team.TeamColor == LocalPlayer.Team.TeamColor then
+                return true
+            end
+        end
     end
-
-    -- Check for friend status
+    
+    -- Method 3: Check friends list
     if player:IsFriendsWith(LocalPlayer.UserId) then
         return true
     end
-
+    
+    -- Method 4: Check character attributes
+    local character = player.Character
+    if character then
+        -- Check for team-related attributes
+        if character:GetAttribute("Team") then
+            local localTeam = LocalPlayer.Character and LocalPlayer.Character:GetAttribute("Team")
+            if character:GetAttribute("Team") == localTeam then
+                return true
+            end
+        end
+        
+        -- Check for team tags or markers
+        local teamTag = character:FindFirstChild("TeamTag") or character:FindFirstChild("TeamName")
+        if teamTag then
+            local localTag = LocalPlayer.Character and (LocalPlayer.Character:FindFirstChild("TeamTag") or LocalPlayer.Character:FindFirstChild("TeamName"))
+            if localTag and teamTag.Value == localTag.Value then
+                return true
+            end
+        end
+    end
+    
+    -- Method 5: Check player attributes
+    if player:GetAttribute("Team") then
+        if player:GetAttribute("Team") == LocalPlayer:GetAttribute("Team") then
+            return true
+        end
+    end
+    
+    -- Method 6: Check player tags
+    if player:FindFirstChild("leaderstats") then
+        local leaderstats = player.leaderstats
+        local teamStat = leaderstats:FindFirstChild("Team") or leaderstats:FindFirstChild("TeamName")
+        if teamStat and LocalPlayer.leaderstats then
+            local localTeamStat = LocalPlayer.leaderstats:FindFirstChild("Team") or LocalPlayer.leaderstats:FindFirstChild("TeamName")
+            if localTeamStat and teamStat.Value == localTeamStat.Value then
+                return true
+            end
+        end
+    end
+    
+    -- Method 7: Check for team-colored highlights or indicators in character
+    if character then
+        local teamIndicator = character:FindFirstChild("TeamIndicator") or 
+                             character:FindFirstChild("TeamColor") or
+                             character:FindFirstChild("Team")
+        if teamIndicator then
+            local localIndicator = LocalPlayer.Character and 
+                                 (LocalPlayer.Character:FindFirstChild("TeamIndicator") or 
+                                  LocalPlayer.Character:FindFirstChild("TeamColor") or
+                                  LocalPlayer.Character:FindFirstChild("Team"))
+            if localIndicator and teamIndicator.Value == localIndicator.Value then
+                return true
+            end
+        end
+    end
+    
+    -- If none of the methods detected a teammate, it's an enemy
     return false
 end
 
@@ -238,9 +310,8 @@ local function getClosestTarget()
     local mousePosition = UserInputService:GetMouseLocation()
 
     for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer
-            and not isTeammate(player)
-            and player.Character then
+        -- Skip if it's the local player or a teammate
+        if player ~= LocalPlayer and not isTeammate(player) and player.Character then
 
             local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
             local part = getTargetPart(player.Character)
@@ -414,12 +485,13 @@ StrengthToggle.MouseButton1Click:Connect(function()
     end
 end)
 
--- E KEY TOGGLE
+-- KEY TOGGLES
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then
         return
     end
 
+    -- E KEY TOGGLE AIM
     if input.KeyCode == aimKey then
         aimToggled = not aimToggled
         aimEnabled = aimToggled -- Sync
@@ -436,6 +508,13 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 
         print("Aim Lock: " .. (aimToggled and "ON" or "OFF"))
     end
+    
+    -- TAB KEY TOGGLE MENU
+    if input.KeyCode == menuKey then
+        menuVisible = not menuVisible
+        MainFrame.Visible = menuVisible
+        print("Menu: " .. (menuVisible and "SHOWN" or "HIDDEN"))
+    end
 end)
 
 -- RESPAWN CLEANUP
@@ -446,10 +525,3 @@ LocalPlayer.CharacterAdded:Connect(function()
 
     highlights = {}
 end)
-
-print("Rivals Glow + Aim Lock V2 Enhanced loaded!")
-print("Default Target: HEAD")
-print("Default Aim Strength: MAX")
-print("Default Glow: STRONG")
-print("Aim Lock: OFF (Press E to enable)")
-print("Auto Shoot: ON (with wall detection)")
