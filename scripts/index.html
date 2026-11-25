@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,68 +18,75 @@ body {
     background: #080d18;
     color: white;
     min-height: 100vh;
-    padding: 50px 20px;
+    padding: 25px;
 }
 
 .container {
-    max-width: 850px;
+    width: 100%;
+    max-width: 1000px;
     margin: auto;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .header h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
+    font-size: 30px;
+    margin-bottom: 8px;
 }
 
 .header p {
     color: #8995aa;
-    font-size: 15px;
+    font-size: 14px;
 }
+
+/* BUTTON GRID */
 
 .button-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
 }
 
+/* SQUARE BUTTONS */
+
 .copy-btn {
+    aspect-ratio: 1 / 1;
+    width: 100%;
     background: #111b2e;
     border: 1px solid #253550;
     border-radius: 12px;
-    padding: 22px;
+    padding: 12px;
     color: white;
     cursor: pointer;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: 0.2s;
+    overflow: hidden;
 }
 
 .copy-btn:hover {
     background: #192944;
     border-color: #3685ff;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 .copy-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.95);
 }
 
 .copy-btn h3 {
-    font-size: 16px;
-    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
-.copy-btn p {
-    font-size: 12px;
-    color: #8995aa;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+/* COPY NOTIFICATION */
 
 .toast {
     position: fixed;
@@ -94,6 +102,7 @@ body {
     transition: 0.25s;
     pointer-events: none;
     font-size: 14px;
+    z-index: 100;
 }
 
 .toast.show {
@@ -101,13 +110,29 @@ body {
     transform: translateX(-50%) translateY(0);
 }
 
+/* MOBILE */
+
 @media (max-width: 550px) {
+    body {
+        padding: 18px;
+    }
+
     .button-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .copy-btn {
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    .copy-btn h3 {
+        font-size: 11px;
     }
 
     .header h1 {
-        font-size: 29px;
+        font-size: 26px;
     }
 }
 </style>
@@ -119,14 +144,14 @@ body {
 
     <div class="header">
         <h1>Quick Copy</h1>
-        <p>Click a button to instantly copy something to your clipboard.</p>
+        <p>Click a button to copy its contents.</p>
     </div>
 
     <div class="button-grid" id="buttonGrid"></div>
 
 </div>
 
-<div class="toast" id="toast">Copied to clipboard!</div>
+<div class="toast" id="toast">Copied!</div>
 
 <script>
 
@@ -178,14 +203,13 @@ const buttons = [
 ];
 
 // ==========================================
-// DO NOT EDIT BELOW UNLESS YOU WANT TO
-// CUSTOMIZE HOW THE PAGE WORKS
+// BUTTON GENERATION
 // ==========================================
 
 const grid = document.getElementById("buttonGrid");
 const toast = document.getElementById("toast");
 
-buttons.forEach((button, index) => {
+buttons.forEach((button) => {
 
     const btn = document.createElement("button");
     btn.className = "copy-btn";
@@ -193,11 +217,7 @@ buttons.forEach((button, index) => {
     const title = document.createElement("h3");
     title.textContent = button.name;
 
-    const description = document.createElement("p");
-    description.textContent = button.text;
-
     btn.appendChild(title);
-    btn.appendChild(description);
 
     btn.addEventListener("click", () => {
         copyText(button.text, button.name);
@@ -206,6 +226,10 @@ buttons.forEach((button, index) => {
     grid.appendChild(btn);
 
 });
+
+// ==========================================
+// CLIPBOARD FUNCTION
+// ==========================================
 
 async function copyText(text, name) {
 
@@ -222,6 +246,7 @@ async function copyText(text, name) {
         }, 2000);
 
     } catch (error) {
+
         toast.textContent = "Clipboard access failed!";
         toast.classList.add("show");
 
@@ -230,6 +255,7 @@ async function copyText(text, name) {
         window.toastTimeout = setTimeout(() => {
             toast.classList.remove("show");
         }, 2000);
+
     }
 
 }
@@ -238,3 +264,4 @@ async function copyText(text, name) {
 
 </body>
 </html>
+```
