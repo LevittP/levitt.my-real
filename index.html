@@ -1,285 +1,756 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khan Academy</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./MidSection/midPartstyles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LevittP — Script Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080910;
+    --card: #111321;
+    --purple: #9870ff;
+    --blue: #628cff;
+    --text: #f5f3ff;
+    --muted: #85879e;
+    --border: rgba(255,255,255,.08);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 550px;
+    height: 550px;
+    border-radius: 50%;
+    filter: blur(170px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::before {
+    background: #683cff;
+    opacity: .13;
+    top: -300px;
+    left: 15%;
+}
+
+body::after {
+    background: #287cff;
+    opacity: .09;
+    bottom: -300px;
+    right: -200px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.navbar {
+    height: 75px;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,9,16,.8);
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.container {
+    width: 84%;
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero {
+    padding: 95px 0 55px;
+    text-align: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 9px 15px;
+    border-radius: 30px;
+    border: 1px solid rgba(152,112,255,.3);
+    background: rgba(152,112,255,.1);
+    color: #c0aaff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 27px;
+}
+
+.hero h1 {
+    font-size: clamp(48px, 8vw, 85px);
+    font-weight: 900;
+    letter-spacing: -5px;
+    line-height: 1.05;
+}
+
+.gradient {
+    background: linear-gradient(110deg,#b18bff,#638cff,#c39aff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero > p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 450px;
+    margin: 22px auto;
+}
+
+.profile {
+    max-width: 700px;
+    margin: 45px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    text-align: left;
+    padding: 25px;
+    background: linear-gradient(120deg,rgba(152,112,255,.12),rgba(98,140,255,.04));
+    border: 1px solid rgba(152,112,255,.23);
+    border-radius: 18px;
+    box-shadow: 0 15px 60px rgba(0,0,0,.2);
+}
+
+.avatar {
+    width: 85px;
+    height: 85px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    border: 2px solid var(--purple);
+    object-fit: cover;
+    background: #191827;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-info h2 {
+    font-size: 23px;
+    font-weight: 900;
+}
+
+.profile-info p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 7px;
+}
+
+.verified {
+    display: none;
+    color: #a98aff;
+    font-size: 10px;
+    margin-top: 9px;
+}
+
+.profile-link {
+    background: linear-gradient(110deg,#895eff,#567eff);
+    padding: 13px 17px;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+    transition: .2s;
+}
+
+.profile-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 25px #895eff55;
+}
+
+.stats {
+    max-width: 700px;
+    margin: 20px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 13px;
+}
+
+.stat {
+    padding: 22px;
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.stat h3 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.stat p {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 7px;
+}
+
+.scripts {
+    padding: 75px 0 110px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 20px;
+}
+
+.section-header h2 {
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.section-header p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 7px;
+}
+
+.search {
+    width: 250px;
+    padding: 13px 15px;
+    border-radius: 9px;
+    outline: none;
+    border: 1px solid var(--border);
+    background: #111321;
+    color: white;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.search:focus {
+    border-color: var(--purple);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.script-card {
+    overflow: hidden;
+    border-radius: 14px;
+    background: linear-gradient(145deg,#151727,#0e101b);
+    border: 1px solid var(--border);
+    transition: .25s;
+    animation: appear .5s ease both;
+}
+
+.script-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(152,112,255,.5);
+    box-shadow: 0 15px 40px #0006;
+}
+
+.thumbnail {
+    height: 155px;
+    background: linear-gradient(135deg,#30224e,#172844);
+    position: relative;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.access {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: #090a14dd;
+    border: 1px solid var(--border);
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.card-content {
+    padding: 19px;
+}
+
+.game {
+    color: #ad91ff;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.card-content h3 {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.description {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 10px;
+    min-height: 38px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    margin-top: 18px;
+    padding-top: 15px;
+}
+
+.card-stats {
+    display: flex;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.view {
+    color: #b59aff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.view:hover {
+    color: white;
+}
+
+.loading {
+    grid-column: 1/-1;
+    padding: 65px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #ffffff18;
+    border-top-color: var(--purple);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 16px;
+}
+
+footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 30px 8%;
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+footer a {
+    color: #ad91ff;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width:850px) {
+    .grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .container {
+        width: 90%;
+    }
+}
+
+@media(max-width:600px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-links {
+        gap: 13px;
+        font-size: 10px;
+    }
+
+    .hero {
+        padding-top: 65px;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .profile {
+        flex-wrap: wrap;
+    }
+
+    .profile-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .stats {
+        gap: 7px;
+    }
+
+    .stat {
+        padding: 15px 7px;
+    }
+
+    .stat h3 {
+        font-size: 19px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+}
+</style>
 </head>
+
 <body>
-    <!-- navbar------------------------------------------------------- -->
-    <hr>
-    <div id="navBar">
-        <div id="navstart">
-            <input type="text" placeholder="Search">
+
+<nav class="navbar">
+    <div class="logo">LEVITT<span>.</span></div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#scripts">Scripts</a>
+        <a href="https://robloxscripts.com/" target="_blank">RobloxScripts ↗</a>
+    </div>
+</nav>
+
+<main class="container">
+
+<section class="hero" id="home">
+
+    <div class="badge">✦ ROBLOXSCRIPTS DEVELOPER</div>
+
+    <h1>
+        Welcome to<br>
+        <span class="gradient">Levitt's Hub.</span>
+    </h1>
+
+    <p>
+        My personal script collection.
+        Explore my releases, discover projects,
+        and find everything I've published.
+    </p>
+
+    <div class="profile">
+
+        <img class="avatar"
+             id="avatar"
+             src="https://placehold.co/150x150/171727/9870ff?text=L"
+             alt="Author profile picture">
+
+        <div class="profile-info">
+            <h2 id="username">LevittP</h2>
+            <p id="displayName">RobloxScripts Author</p>
+            <div class="verified" id="verified">✦ Verified Author</div>
         </div>
 
+        <a class="profile-link"
+           id="profileLink"
+           href="https://robloxscripts.com/"
+           target="_blank">
+            View Profile ↗
+        </a>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <h3 id="scriptCount">--</h3>
+            <p>Published Scripts</p>
+        </div>
+
+        <div class="stat">
+            <h3 id="totalViews">--</h3>
+            <p>Total Views</p>
+        </div>
+
+        <div class="stat">
+            <h3 id="totalLikes">--</h3>
+            <p>Total Likes</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="scripts" id="scripts">
+
+    <div class="section-header">
         <div>
-            <img src="https://cdn.prod.website-files.com/602d4ff69767dd8dc09c31f2/602d6e491f08087eb1745867_KeepLearingv4_KALogo.svg" alt="logo">
+            <h2>My <span class="gradient">Scripts.</span></h2>
+            <p>All published scripts from my RobloxScripts account.</p>
         </div>
 
-        <div id="navend">
-            <a href="./Donate page/donate.html">Donate</a>
-            <a href="./Auth/login.html">Log in</a>
-            <a id="signup" href="./Auth/signup.html">Sign up</a>
+        <input class="search"
+               id="search"
+               placeholder="Search scripts...">
+    </div>
+
+    <div class="grid" id="grid">
+        <div class="loading">
+            <div class="spinner"></div>
+            Loading LevittP's scripts...
         </div>
     </div>
-    <hr>
 
-    <!-- hero section----------------------------------------- -->
-    <div id="main">
-        <div><img src="https://cdn.kastatic.org/images/lohp/hero_student_collage_IN_2x.png" alt="main"  height="400px"></div>
-        <div>
-            <div id="h1">
-                <h1 class="mainh1">For every student,</h1>
-                <h1 class="mainh1">every classroom.</h1>
-                <h1 id="mainh1" class="mainh1">Real results.</h1>
+</section>
+
+</main>
+
+<footer>
+    <span>© 2026 LevittP. All rights reserved.</span>
+    <span>Scripts powered by <a href="https://robloxscripts.com/" target="_blank">RobloxScripts.com</a></span>
+</footer>
+
+<script>
+const API = "https://robloxscripts.com/api/v1";
+const AUTHOR = "LevittP";
+
+let allScripts = [];
+
+const $ = id => document.getElementById(id);
+
+function number(n) {
+    return new Intl.NumberFormat("en-US", {
+        notation: "compact",
+        maximumFractionDigits: 1
+    }).format(n || 0);
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[c]);
+}
+
+async function loadScripts() {
+
+    const response = await fetch(
+        `${API}/scripts?author=${encodeURIComponent(AUTHOR)}&limit=50&sort=newest`
+    );
+
+    if (!response.ok) {
+        throw new Error("RobloxScripts API request failed.");
+    }
+
+    const result = await response.json();
+
+    allScripts = result.data || [];
+
+    const author = allScripts.find(s => s.author)?.author;
+
+    $("username").textContent = author?.username || AUTHOR;
+    $("displayName").textContent = "RobloxScripts Author";
+
+    if (author?.verified) {
+        $("verified").style.display = "block";
+    }
+
+    $("scriptCount").textContent =
+        number(result.pagination?.total ?? allScripts.length);
+
+    $("totalViews").textContent =
+        number(allScripts.reduce((sum,s) => sum + (s.views || 0),0));
+
+    $("totalLikes").textContent =
+        number(allScripts.reduce((sum,s) => sum + (s.likes || 0),0));
+
+    renderScripts(allScripts);
+}
+
+function renderScripts(scripts) {
+
+    const grid = $("grid");
+
+    if (!scripts.length) {
+        grid.innerHTML = `
+            <div class="loading">
+                No published scripts found for ${AUTHOR}.
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = scripts.map((s,i) => {
+
+        const image = s.image || s.game?.iconUrl || "";
+
+        return `
+        <article class="script-card"
+                 style="animation-delay:${i * .04}s">
+
+            <div class="thumbnail">
+
+                ${image ? `
+                    <img src="${escapeHTML(image)}"
+                         alt="${escapeHTML(s.title)}"
+                         loading="lazy"
+                         onerror="this.style.display='none'">
+                ` : ""}
+
+                <span class="access">
+                    ${escapeHTML(s.accessType || "Free")}
+                </span>
+
             </div>
 
-            <p id="mainptag">We’re a nonprofit with the mission to provide a free, world-class education for anyone, anywhere.</p>
+            <div class="card-content">
 
-            <div id="mainbtn">
-                <button onclick="location.href='./Auth/signup.html'">Learners</button>
-                <button onclick="location.href='./Auth/signup.html'">Teachers</button>
-                <button onclick="location.href='./Auth/signup.html'">Parents</button>
+                <div class="game">
+                    ${escapeHTML(s.game?.name || "Universal")}
+                </div>
+
+                <h3>${escapeHTML(s.title || "Untitled")}</h3>
+
+                <p class="description">
+                    ${escapeHTML(s.description || "No description available.")}
+                </p>
+
+                <div class="card-footer">
+
+                    <div class="card-stats">
+                        <span>◉ ${number(s.views)}</span>
+                        <span>♥ ${number(s.likes)}</span>
+                    </div>
+
+                    <a class="view"
+                       href="${escapeHTML(s.scriptPageUrl || "https://robloxscripts.com/")}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                       View Script ↗
+                    </a>
+
+                </div>
+
             </div>
-        </div>
-    </div>
-    
-    <!-- secondSection------------------------------------------------------------ -->
-    <h1 id="secondSectionh1">Why Khan Academy works</h1>
-    <div id="secondSection">
-        <div>
-            <img src="https://cdn.kastatic.org/images/lohp/personalized_learning_icon.png" width="110px">
-        </div>
-        <div>
-            <img src="https://cdn.kastatic.org/images/lohp/trusted_content_icon.png" width="110px">
-        </div>
-        <div>
-            <img src="https://cdn.kastatic.org/images/lohp/empower_teachers_icon.png" width="110px">
-        </div>
-    </div>
+        </article>
+        `;
+    }).join("");
+}
 
-    <div id="secondSectionContent">
-        <div>
-            <h4>Personalized learning</h4>
-            <p>Students practice at their own pace, first filling in gaps in their understanding and then accelerating their learning.</p>
-        </div>
-        <div>
-            <h4>Trusted content</h4>
-            <p>Created by experts, Khan Academy’s library of trusted, standards-aligned practice and lessons covers math K-12 through early college, grammar, science, history, SAT®, and more. It’s all free for learners and teachers.</p>
-        </div>
-        <div>
-            <h4>Tools to empower teachers</h4>
-            <p>With Khan Academy, teachers can identify gaps in their students’ understanding, tailor instruction, and meet the needs of every student.</p>
-        </div>
-    </div>
+$("search").addEventListener("input", e => {
 
-    <!-- Teachers section --------------------------------- -->
-    <div id="teachersSection">
-        <div><img src="https://cdn.kastatic.org/images/lohp/faces_collage_2@2x.png" width="600px"></div>
-        <div>
-            <h5>TEACHERS</h5>
-            <h1>“I’m finally able to truly differentiate my classroom. This has been priceless for my students’ engagement.”</h1>
-            <h6>UDAYA LAKSHMI PALAPALA / Middle school Coordinator / Hyderabad, Telangana</h6>
-            <p>We empower teachers to support their entire classroom. 90% of US teachers who have used Khan Academy have found us effective.</p>
-            <button onclick="location.href='./Auth/signup.html'">Teachers, start here</button>
-        </div>
-    </div>
+    const query = e.target.value.toLowerCase();
 
-    <!-- Learners section  ----------------------------- -->
-    <div id="learnersSection">
-        <div>
-            <h5>LEARNERS AND STUDENTS</h5>
-            <h1>You can learn anything.</h1>
-            <p>Build a deep, solid understanding in math, science, grammar, history, SAT®, and more.</p>
-            <button onclick="location.href='./Auth/signup.html'">Learners, start here</button>
-        </div>
-        <div><img src="https://cdn.kastatic.org/images/lohp/laptop_collage@2x.png" width="550px"></div>
-    </div>
+    renderScripts(allScripts.filter(s =>
+        [
+            s.title,
+            s.description,
+            s.game?.name,
+            ...(s.tags || [])
+        ].join(" ").toLowerCase().includes(query)
+    ));
 
-    <!-- testimonial section --------------------------------------- -->
-    <div id="testmonial">
-        <h1>“When I was a child, I used to fear mathematics. But now, I am in love with mathematics because of Khan Academy.”</h1>
-        <div id="testmonialContent">
-            <div>
-                <h3>ANJALI</h3>
-                <p>GURUGRAM, HARYANA</p>
-            </div>
-            <img src="https://cdn.kastatic.org/images/lohp/anjali-3.png" width="150px">
-        </div>
-    </div>
+});
 
-    <!-- donation section ------------------------------- -->
-    <div id="donateSection">
-        <div><img src="https://cdn.kastatic.org/images/lohp/math-unicorn-donate-collage.png" width="600px"></div>
-        <div>
-            <h5>TOGETHER WE CAN MAKE A DIFFERENCE</h5>
-            <h1>Every child deserves the chance to learn.</h1>
-            <p>Across the globe, 617 million children are missing basic math and reading skills. We’re a nonprofit delivering the education they need, and we need your help. You can change the course of a child’s life.</p>
-            <button onclick="location.href='./Donate page/donate.html'" >give them the chance</button>
-        </div>
-    </div>
+loadScripts().catch(error => {
 
-    <!-- all buttons section -------------------------- -->
-    <h1 id="allbtnh1">Join Khan Academy today</h1>
-    <div id="allButton">
-        <button onclick="location.href='./Auth/signup.html'">Learners</button>
-        <button onclick="location.href='./Auth/signup.html'">Teachers</button>
-        <button onclick="location.href='./Auth/signup.html'">Parents</button>
-        <button onclick="location.href='./Donate page/donate.html'" >Give today</button>
-    </div>
+    console.error(error);
 
-    <!-- key supporters section  ------------------------------- -->
-    <div id="lastSection">
-        <h1>Key supporters</h1>
-        <div id="lastSectionimg">
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/bank-of-america-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/college-board-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/ann-and-john-doerr-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/gates-foundation-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/lemann-foundation-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/carlos-rodriguez-pastor-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/tata-trusts-dark-gray@2x.png" width="200px"></div>
-            <div><img src="https://cdn.kastatic.org/images/supporters-logos/valhalla-dark-gray@2x.png" width="200px"></div>
-        </div>
-    </div>
-
-    <!-- footer section ---------------------- -->
-
-    <footer>
-      <div id="fcontainer">
-        <div id="fTopPart">
-          <div id="fDetail">
-            <p>
-              Our mission is to provide a free, world-class education to anyone,
-              anywhere.
+    $("grid").innerHTML = `
+        <div class="loading">
+            <h3>Unable to load scripts.</h3>
+            <p style="margin-top:10px">
+                Check your connection and refresh the page.
             </p>
-            <p>
-              Khan Academy is a 501(c)(3) nonprofit organization.
-              <a href="./Donate page/donate.html">Donate</a> or <a href="#">volunteer</a> today!
-            </p>
-          </div>
+        </div>
+    `;
 
-          <!--Links-->
-          <div id="fLinks">
-            <!-- About-->
-            <div>
-              <a href="./About page/about.html">About</a>
-              <a href="#">News</a>
-              <a href="#">Impact</a>
-              <a href="#">Our team</a><a href="#">Our interns</a>
-              <a href="#">Our content specialists</a>
-              <a href="#">Our leadership</a>
-              <a href="#">Our supporters</a><a href="#">Our contributors</a>
-              <a href="">Our finanaces</a>
-              <a href="#">Careers</a>
-              <a href="#">Internships</a><a href="#">Cookie Preferences</a>
-            </div>
-            <!---->
-            <!-- Contact-->
-            <div id="fContact">
-              <div>
-                <a href="#">Contact</a>
-                <a href="#">Help center</a>
-                <a href="#">Support community</a>
-                <a href="#">Share your story</a>
-                <a href="#">Press</a>
-              </div>
-              <div>
-                <h2>Download our apps</h2>
-                <a
-                  href="https://apps.apple.com/us/app/khan-academy/id469863705"
-                >
-                  <img
-                    class="appImg"
-                    src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?releaseDate=1331424000"
-                    alt=""
-                  />
-                </a>
-                <a
-                  href="https://play.google.com/store/apps/details?id=org.khanacademy.android&referrer=utm_source%3Dwebsite%2520footer%26utm_medium%3Dwebsite%2520footer%26utm_campaign%3Dwebsite%2520footer&pli=1"
-                >
-                  <img
-                    class="appImg"
-                    src="https://cdn.kastatic.org/images/store-badges/google-play/en.png"
-                    alt=""
-                  />
-                </a>
-              </div>
-            </div>
-            <!---->
-            <!-- Courses-->
-            <div>
-              <a href="#">Course</a>
-              <a href="#">Math (NCERT)</a>
-              <a href="#">Math foundations</a>
-              <a href="#">Math (Maharashtra)</a>
-              <a href="#">Science (NCERT)</a>
-              <a href="#">All State boards</a>
-              <a href="#">Explore more</a>
-              <a href="#">Khan for Educators</a>
-            </div>
-            <!---->
-          </div>
-        </div>
-        <div id="LangAndCount">
-          <div id="flanguage">
-            <span>Language</span>
-            <button id="selectLangBtn">English</button>
-            <span>&#8964;</span>
-          </div>
-          <div id="fCountry">
-            <span>Country</span>
-            <img
-              class="flagImg"
-              src="https://cdn.kastatic.org/images/country-flag-icons/us-flag.png"
-              alt=""
-            />
-            <a href="#">U.S.</a>
-            <img
-              class="flagImg"
-              src="https://cdn.kastatic.org/images/country-flag-icons/india-flag.png"
-              alt=""
-            />
-            <a href="#">India</a>
-            <img
-              class="flagImg"
-              src="https://cdn.kastatic.org/images/country-flag-icons/mexico-flag.png"
-              alt=""
-            />
-           <a href="/secret" style="text-decoration: none; color: inherit;">Mexico</a>
-           <img
-             class="flagImg"
-            src="https://cdn.kastatic.org/images/country-flag-icons/brazil-flag.png"
-            alt=""
-           />
-          </a>
-            <a href="#">Brazil</a>
-          </div>
-        </div>
-        <div id="fBottomPart">
-          <div class="copyrightDiv">
-            <span>© 2026 Khan Academy</span>
-            <a href="#">Terms of use </a>
-            <a href="#">Privacy Policy </a>
-            <a href="#">Cookie Notice</a>
-            <a href="#">Accessibility Statement</a>
-          </div>
-          <div id="mediaLinks">
-            <a href="https://www.facebook.com/khanacademy">
-              <span class="fbLogo"></span>
-            </a>
-            <a href="https://x.com/khanacademy">
-              <span class="twLogo"></span>
-            </a>
-            <a href="https://www.instagram.com/khanacademy/">
-              <span class="instaLogo"></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
+});
+</script>
+
 </body>
 </html>
